@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peace Mind</title>
+    <!-- 外部CSSファイルを読み込み -->
+    <link rel="stylesheet" href="{% static 'mentalhealth/css/peace.css' %}" />
+    <!-- Material Symbolsの読み込み -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <section>
+        <h2>平和な心</h2>
+        <!-- Hero Section -->
+        <section class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
+                あなたの心の健康をサポートします。
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                一人で悩まず、あなたのペースで、心の平和を取り戻すためのリソースがここにあります。
+            </p>
+        </section>
+        <div class="container">
+            <!-- ストレスのカード -->
+            <div class="card">
+                <div class="card-inner">
+                    <div class="box">
+                        <div class="imgBox">
+                            <img src="{% static 'mentalhealth/photo/stress.jpeg' %}" alt="Stress">
+                        </div>
+                        <div class="icon">
+                            <a href="{% url 'mentalhealth:stress_page' %}" class="iconBox">
+                            <span class="material-symbols-outlined">ストレス</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <!-- ストレスに関する簡単な説明などをここに追加できます -->
+                </div>
+            </div>
+
+            <!-- うつ病のカード -->
+            <div class="card">
+                <div class="card-inner">
+                    <div class="box">
+                        <div class="imgBox">
+                            <img src="{% static 'mentalhealth/photo/depression.jpeg' %}" alt="Depression">
+                        </div>
+                        <div class="icon">
+                            <a href="{% url 'mentalhealth:depression_page' %}" class="iconBox">
+                                <span class="material-symbols-outlined">うつ病</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <!-- うつ病に関する簡単な説明などをここに追加できます -->
+                </div>
+            </div>
+
+            <!-- 不安障害のカード -->
+            <div class="card">
+                <div class="card-inner">
+                    <div class="box">
+                        <div class="imgBox">
+                            <img src="{% static 'mentalhealth/photo/anxity.jpeg' %}" alt="Anxiety">
+                        </div>
+                        <div class="icon">
+                            <a href="{% url 'mentalhealth:anxiety_page' %}" class="iconBox">
+                                <span class="material-symbols-outlined">不安</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <!-- 不安障害に関する簡単な説明などをここに追加できます -->
+                </div>
+            </div>
+
+            <!-- 教員への相談のカード -->
+            <div class="card">
+                <div class="card-inner">
+                    <div class="box">
+                        <div class="imgBox">
+                            <!-- 教員への相談に適した画像に変更することをお勧めします -->
+                            <img src="{% static 'mentalhealth/photo/soso.png' %}" alt="Teacher Consultation"> 
+                        </div>
+                        <div class="icon">
+                            <!-- リンク先をsoudan.htmlに修正 -->
+                            <a href="{% url 'mentalhealth:soudan_page' %}" class="iconBox">
+                                <span class="material-symbols-outlined">教員への相談</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <!-- 教員への相談に関する簡単な説明などをここに追加できます -->
+                </div>
+            </div>
+
+           
+            <!-- 新しいカード: Take Care -->
+            <div class="card">
+                <div class="card-inner">
+                    <div class="box">
+                        <div class="imgBox">
+                            <!-- Take Careに適した画像に変更することをお勧めします -->
+                            <img src="{% static 'mentalhealth/photo/takecare.png' %}" alt="Take Care"> 
+                        </div>
+                        <div class="icon">
+                            <!-- リンク先をtakecare.htmlに設定 -->
+                            <a href="{% url 'mentalhealth:takecare_page' %}" class="iconBox">
+                                <span class="material-symbols-outlined">セルフケア</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <!-- セルフケアに関する簡単な説明などをここに追加できます -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 外部JavaScriptファイルを読み込み -->
+    <script src="{% static 'mentalhealth/js/peace.js' %}"></script>
+</body>
+</html>

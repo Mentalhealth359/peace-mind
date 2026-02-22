@@ -1,0 +1,142 @@
+/* peace.css */
+
+/* Sunrise animation for background */
+body {
+    background: linear-gradient(to top, #D3E4CD, #4F6D5A);
+    animation: sunrise 10s infinite alternate;
+    font-family: "Potta One", system-ui, sans-serif; /* Fallback fontを追加 */
+    font-style: normal;
+    font-weight: 700;
+    color: #c9d1d1;
+    text-align: center;
+    padding: 60px 30px;
+    min-height: 100vh; /* ビューポートの高さいっぱいにする */
+    display: flex; /* コンテンツを中央に配置しやすくするため */
+    flex-direction: column; /* 縦方向に要素を並べる */
+    align-items: center; /* 水平方向の中央揃え */
+    justify-content: center; /* 垂直方向の中央揃え */
+}
+
+@keyframes sunrise {
+    0% {
+        background: linear-gradient(to top,#4F6D5A, #71a383);
+    }
+    50% {
+        background: linear-gradient(to top, #4F6D5A, #769581);
+    }
+    100% {
+        background: linear-gradient(to top, #4F6D5A,#6d9c7f);
+    }
+}
+
+h2 {
+    margin-bottom: 60px;
+    /* レスポンシブなフォントサイズに変更 */
+    font-size: clamp(40px, 8vw, 80px); 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px; /* コンテナの最大幅を設定 */
+    width: 100%; /* 親要素の幅に合わせて広がる */
+    margin-top: 20px; /* 必要に応じて調整 */
+    margin-bottom: 20px; /* 必要に応じて調整 */
+}
+
+.card {
+    background: rgba(25, 68, 74, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    /* レスポンシブなカードの幅を設定 */
+    flex: 1 1 300px; /* flexアイテムの伸縮性を設定（最小幅300px） */
+    max-width: calc(33.33% - 14px); /* 3列表示の場合（20pxのgapを考慮） */
+}
+
+/* レスポンシブ対応のメディアクエリ */
+@media (max-width: 900px) {
+    .card {
+        max-width: calc(50% - 10px); /* 2列表示 */
+    }
+}
+
+@media (max-width: 600px) {
+    .card {
+        max-width: 100%; /* 1列表示 */
+    }
+    h2 {
+        margin-bottom: 30px;
+    }
+    body {
+        padding: 30px 15px; /* モバイルでのpadding調整 */
+    }
+}
+
+
+.card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card-inner {
+    padding: 20px;
+}
+
+.imgBox {
+    /* 固定の高さと幅を削除し、レスポンシブにする */
+    width: 100%;
+    padding-top: 75%; /* 4:3のアスペクト比を維持 (高さ/幅 = 300/400 = 0.75) */
+    position: relative; /* imgタグをposition: absoluteで配置するため */
+    overflow: hidden;
+    border-radius: 100px;
+}
+
+.imgBox img {
+    /* 画像をimgBox内に配置し、アスペクト比を保ちつつボックスを埋める */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 画像がボックスを埋めるように調整 */
+    border-radius: 100px;
+    transition: transform 0.2s;
+}
+
+.imgBox img:hover {
+    transform: scale(1.1); /* 少し控えめなズーム効果 */
+}
+
+.icon {
+    margin-top: 10px;
+}
+
+.iconBox {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: hsl(166, 54%, 31%);
+    color: #feffff;
+    text-transform: uppercase;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    text-decoration: none; /* リンクの下線を削除 */
+}
+
+.iconBox:hover {
+    background-color: hsl(166, 64%, 41%); /* ホバー時の色変更 */
+    transform: translateY(-2px); /* 少し上に移動 */
+}
