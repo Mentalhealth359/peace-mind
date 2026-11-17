@@ -5,6 +5,7 @@ Peace Mind の起動スクリプト（開発用・本番用の切り替え）。
 使い方（manage.py と同じフォルダで実行）:
     python run.py dev                 開発サーバー（自動リロード・DEBUG=True）
     python run.py prod                本番サーバー（waitress・DEBUG=False）
+    python run.py prod --local        本番設定を自分のPCで試す（http://localhost:8000 で開ける）
     python run.py check               本番設定に問題がないか確認だけする
     python run.py genkey              本番用の DJANGO_SECRET_KEY と FIELD_ENCRYPTION_KEY を作って表示する
 
@@ -56,7 +57,11 @@ def cmd_check(args):
 
 
 def cmd_prod(args):
+    if args.local:
+        # settings.py が読み込まれる前に設定する（localhost を許可し、HTTPS 設定を切る）
+        os.environ['DJANGO_LOCAL'] = '1'
     setup_django('production')
+    from django.conf import settings
     from django.core.management import call_command
 
     call_command('check', deploy=True, fail_level='ERROR')
@@ -68,7 +73,8 @@ def cmd_prod(args):
     from waitress import serve
     from peace.wsgi import application
 
-    host = args.host or '0.0.0.0'
+    # --local は自分のPCからだけ開けるようにする
+    host = args.host or ('127.0.0.1' if args.local else '0.0.0.0')
     options = {'host': host, 'port': args.port, 'threads': args.threads}
     trusted_proxy = args.trusted_proxy or os.environ.get('WAITRESS_TRUSTED_PROXY')
     if trusted_proxy:
@@ -79,7 +85,13 @@ def cmd_prod(args):
             trusted_proxy_headers='x-forwarded-for x-forwarded-proto',
             clear_untrusted_proxy_headers=True,
         )
-    print(f"本番サーバーを起動します: http://{host}:{args.port}/  （止めるには Ctrl+C）")
+    if args.local:
+        print("【ローカル確認モード】本番設定を HTTPS なしで動かしています。公開には使わないでください。")
+        print(f"本番サーバーを起動します: http://localhost:{args.port}/  （止めるには Ctrl+C）")
+    else:
+        print(f"本番サーバーを起動します: http://{host}:{args.port}/  （止めるには Ctrl+C）")
+    # ここに無いドメインでアクセスすると 400 Bad Request（DisallowedHost）になる
+    print(f"アクセスできるドメイン: {', '.join(settings.ALLOWED_HOSTS)}")
     serve(application, **options)
 
 
@@ -112,6 +124,8 @@ def main():
     add_server_options(p_prod)
     p_prod.add_argument('--threads', type=int, default=8)
     p_prod.add_argument('--trusted-proxy', default=None, help='前段のリバースプロキシのIP（例: 127.0.0.1）')
+    p_prod.add_argument('--local', action='store_true',
+                        help='本番設定を自分のPCで試す（http://localhost で開ける・HTTPS なし）')
     p_prod.set_defaults(func=cmd_prod)
 
     p_check = sub.add_parser('check', help='本番設定を確認する')

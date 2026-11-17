@@ -43,12 +43,18 @@ def _env_bool(name, default):
     return value.strip().lower() in ('1', 'true', 'yes', 'on')
 
 
+# 本番設定を自分のPCで試すモード（python run.py prod --local が DJANGO_LOCAL=1 にする）。
+# localhost でのアクセスを許可し、HTTPS 用の設定を切る。インターネットに公開するときは使わない。
+LOCAL_TRIAL = IS_PRODUCTION and _env_bool('DJANGO_LOCAL', False)
+
 if IS_PRODUCTION:
     DEBUG = False
     SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
     if not SECRET_KEY:
         raise RuntimeError("本番では環境変数 DJANGO_SECRET_KEY が必須です（python run.py genkey で作れます）。")
     ALLOWED_HOSTS = _env_list('DJANGO_ALLOWED_HOSTS')
+    if LOCAL_TRIAL:
+        ALLOWED_HOSTS += ['localhost', '127.0.0.1', '[::1]']
     if not ALLOWED_HOSTS:
         raise RuntimeError("本番では環境変数 DJANGO_ALLOWED_HOSTS が必須です（例: example.com,www.example.com）。")
 else:
@@ -273,7 +279,9 @@ if not FIELD_ENCRYPTION_KEY:
 # DJANGO_HTTPS=1（本番の既定）なら HTTPS 前提の設定を有効にする。
 # HTTPS を用意する前に本番設定を手元で試すときだけ DJANGO_HTTPS=0 にする。
 if IS_PRODUCTION:
-    _https = _env_bool('DJANGO_HTTPS', True)
+    # --local のときは .env に DJANGO_HTTPS=1 と書いてあっても HTTPS 設定を切る
+    # （切らないと http://localhost が https://localhost に転送されて開けない）
+    _https = False if LOCAL_TRIAL else _env_bool('DJANGO_HTTPS', True)
 
     SESSION_COOKIE_SECURE = _https
     CSRF_COOKIE_SECURE = _https
@@ -284,12 +292,18 @@ if IS_PRODUCTION:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = _env_bool('DJANGO_HSTS_INCLUDE_SUBDOMAINS', False)
     SECURE_HSTS_PRELOAD = False
 
+    if LOCAL_TRIAL:
+        # --local では HTTPS 設定をわざと切っているので、その警告だけ出さない
+        SILENCED_SYSTEM_CHECKS = ['security.W004', 'security.W008', 'security.W012', 'security.W016']
+
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_REFERRER_POLICY = 'same-origin'
     SESSION_COOKIE_HTTPONLY = True
     X_FRAME_OPTIONS = 'DENY'
 
-    if SITE_BASE_URL.startswith('http://127.0.0.1') or SITE_BASE_URL.startswith('http://localhost'):
+    if not LOCAL_TRIAL and (
+        SITE_BASE_URL.startswith('http://127.0.0.1') or SITE_BASE_URL.startswith('http://localhost')
+    ):
         print(
             "[production] SITE_BASE_URL がローカルのままです。メール内のリンクが壊れるので "
             "公開URL（例: https://example.com）を設定してください。"
