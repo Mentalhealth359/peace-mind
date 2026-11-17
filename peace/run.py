@@ -10,9 +10,12 @@ Peace Mind の起動スクリプト（開発用・本番用の切り替え）。
     python run.py genkey              本番用の DJANGO_SECRET_KEY と FIELD_ENCRYPTION_KEY を作って表示する
 
 オプション:
-    --host 0.0.0.0 --port 8000        待ち受けるアドレスとポート
+    --host 127.0.0.1 --port 8000      待ち受けるアドレスとポート（既定 127.0.0.1:8000）
     --threads 8                       （prod のみ）同時に処理するリクエスト数
-    --trusted-proxy 127.0.0.1         （prod のみ）前段に nginx などを置くときのプロキシのIP
+    --trusted-proxy 127.0.0.1         （prod のみ）cloudflared が接続してくるIP（既定 127.0.0.1）
+
+本番は Cloudflare Tunnel 経由でだけ公開する前提。127.0.0.1 でだけ待ち受けるので、
+トンネル（同じマシンの cloudflared）以外から 8000 番へ直接つなぐことはできない。
     --skip-setup                      migrate / collectstatic を実行せずに起動する
 
 本番に必要な環境変数は .env.example を参照。
@@ -73,25 +76,36 @@ def cmd_prod(args):
     from waitress import serve
     from peace.wsgi import application
 
-    # --local は自分のPCからだけ開けるようにする
-    host = args.host or ('127.0.0.1' if args.local else '0.0.0.0')
+    # 本番は Cloudflare Tunnel 経由でだけ公開する。
+    # cloudflared は同じマシンから 127.0.0.1:8000 へ接続してくるので、127.0.0.1 でだけ待ち受ければ
+    # インターネットや LAN から 8000 番へ直接つなぐことはできない（＝トンネル以外は拒否）。
+    host = args.host or os.environ.get('WAITRESS_HOST') or '127.0.0.1'
     options = {'host': host, 'port': args.port, 'threads': args.threads}
-    trusted_proxy = args.trusted_proxy or os.environ.get('WAITRESS_TRUSTED_PROXY')
-    if trusted_proxy:
-        # プロキシから来た X-Forwarded-For / -Proto だけを信用し、
-        # 本当の接続元IP（REMOTE_ADDR）と https かどうかを正しく受け取る
+
+    if not args.local:
+        # cloudflared（127.0.0.1）が付ける X-Forwarded-For / -Proto だけを信用し、
+        # 本当の接続元IP（REMOTE_ADDR）と https で来たかどうかを受け取る。
+        # これが無いと HTTPS への転送がループし、レート制限もすべて 127.0.0.1 扱いになる。
+        trusted_proxy = args.trusted_proxy or os.environ.get('WAITRESS_TRUSTED_PROXY') or '127.0.0.1'
         options.update(
             trusted_proxy=trusted_proxy,
+            trusted_proxy_count=1,
             trusted_proxy_headers='x-forwarded-for x-forwarded-proto',
             clear_untrusted_proxy_headers=True,
         )
+
     if args.local:
         print("【ローカル確認モード】本番設定を HTTPS なしで動かしています。公開には使わないでください。")
         print(f"本番サーバーを起動します: http://localhost:{args.port}/  （止めるには Ctrl+C）")
     else:
         print(f"本番サーバーを起動します: http://{host}:{args.port}/  （止めるには Ctrl+C）")
+        print(f"信用するプロキシ（Cloudflare Tunnel）: {options['trusted_proxy']}")
+        if host not in ('127.0.0.1', 'localhost', '::1'):
+            print(f"[警告] {host} で待ち受けています。Cloudflare Tunnel を通さずに直接アクセスできてしまいます。")
     # ここに無いドメインでアクセスすると 400 Bad Request（DisallowedHost）になる
     print(f"アクセスできるドメイン: {', '.join(settings.ALLOWED_HOSTS)}")
+    if any(h.endswith('example.com') for h in settings.ALLOWED_HOSTS):
+        print("[警告] DJANGO_ALLOWED_HOSTS が .env.example の例（example.com）のままです。公開するドメインに書き換えてください。")
     serve(application, **options)
 
 
@@ -112,7 +126,8 @@ def main():
     sub = parser.add_subparsers(dest='command', required=True)
 
     def add_server_options(p, default_port=8000):
-        p.add_argument('--host', default=None, help='待ち受けるアドレス（dev: 127.0.0.1 / prod: 0.0.0.0）')
+        p.add_argument('--host', default=None,
+                       help='待ち受けるアドレス（既定 127.0.0.1。prod で変えると Cloudflare Tunnel を通さず直接アクセスできてしまう）')
         p.add_argument('--port', type=int, default=int(os.environ.get('PORT', default_port)))
         p.add_argument('--skip-setup', action='store_true', help='migrate / collectstatic を実行しない')
 
@@ -123,7 +138,8 @@ def main():
     p_prod = sub.add_parser('prod', help='本番サーバーを起動する')
     add_server_options(p_prod)
     p_prod.add_argument('--threads', type=int, default=8)
-    p_prod.add_argument('--trusted-proxy', default=None, help='前段のリバースプロキシのIP（例: 127.0.0.1）')
+    p_prod.add_argument('--trusted-proxy', default=None,
+                        help='cloudflared が接続してくるIP（既定 127.0.0.1。別マシン/コンテナで動かすときだけ変える）')
     p_prod.add_argument('--local', action='store_true',
                         help='本番設定を自分のPCで試す（http://localhost で開ける・HTTPS なし）')
     p_prod.set_defaults(func=cmd_prod)
