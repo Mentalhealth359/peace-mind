@@ -122,6 +122,7 @@ python run.py dev
 | `--threads 8` | prod のみ。同時に処理するリクエスト数 |
 | `--trusted-proxy 127.0.0.1` | prod のみ。前段に nginx などを置くときのプロキシの IP |
 | `--skip-setup` | `migrate` / `collectstatic` を実行せずに起動する |
+| `--local` | prod のみ。本番設定を自分の PC で試す（http://localhost で開ける・HTTPS なし） |
 
 開発と本番の違い：
 
@@ -158,7 +159,8 @@ python run.py prod
 
 - **暗号化キーに注意**：開発中に登録した学生のデータを本番でも使うなら、`FIELD_ENCRYPTION_KEY` は新しく作らず、`field_encryption.key` の中身をそのまま使います。鍵が違うと保存済みのデータを読めなくなります。
 - **HTTPS**：本番設定は HTTPS で公開する前提です。nginx などで HTTPS を受けて waitress に渡す場合は、`--trusted-proxy`（または `.env` の `WAITRESS_TRUSTED_PROXY`）にプロキシの IP を書きます。これを書かないと、HTTPS へ転送し続けてページが開けなくなり、接続元の IP もプロキシの IP になってしまいます。
-- **HTTPS なしで試すとき**：手元で本番設定を確認するだけなら `DJANGO_HTTPS=0 python run.py prod` で起動できます。インターネットに公開するときは使わないでください。
+- **自分の PC で本番設定を試すとき**：`python run.py prod --local` で起動し、http://localhost:8000/ を開きます。localhost でのアクセスを許可し、HTTPS 用の設定を切ります。インターネットに公開するときは使わないでください。
+- **`400 Bad Request` / `DisallowedHost` が出たら**：アクセスしたドメインが `DJANGO_ALLOWED_HOSTS` に入っていません。起動時に「アクセスできるドメイン」が表示されるので確認してください。手元で `localhost` を開くなら `--local` を付けます。
 - **HSTS**：最初は 1 時間（`DJANGO_HSTS_SECONDS=3600`）にしてあります。問題がなければ 1 年（`31536000`）に上げます。
 - `python run.py check` で出る `security.W005` と `security.W021`（HSTS のサブドメインと preload）は、わざと無効にしているものです。
 
