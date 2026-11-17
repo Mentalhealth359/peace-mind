@@ -23,16 +23,42 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+# ==========================================
+# 本番 / 開発 の切り替え
+# ==========================================
+# DJANGO_ENV=production で本番設定になる（run.py prod は自動で設定する）。
+# 未設定なら開発設定（今までどおり python manage.py runserver で動く）。
+DJANGO_ENV = os.environ.get('DJANGO_ENV', 'development').strip().lower()
+IS_PRODUCTION = DJANGO_ENV == 'production'
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5*_x^9xcf-do58rzi)#tdxub_m6fqpjya%xjwz9(tx-1@fx3bj'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+def _env_list(name):
+    return [v.strip() for v in os.environ.get(name, '').split(',') if v.strip()]
 
-ALLOWED_HOSTS = []
+
+def _env_bool(name, default):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in ('1', 'true', 'yes', 'on')
+
+
+if IS_PRODUCTION:
+    DEBUG = False
+    SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+    if not SECRET_KEY:
+        raise RuntimeError("本番では環境変数 DJANGO_SECRET_KEY が必須です（python run.py genkey で作れます）。")
+    ALLOWED_HOSTS = _env_list('DJANGO_ALLOWED_HOSTS')
+    if not ALLOWED_HOSTS:
+        raise RuntimeError("本番では環境変数 DJANGO_ALLOWED_HOSTS が必須です（例: example.com,www.example.com）。")
+else:
+    # 開発用。この鍵は公開されているので本番では絶対に使わない。
+    DEBUG = True
+    SECRET_KEY = 'django-insecure-5*_x^9xcf-do58rzi)#tdxub_m6fqpjya%xjwz9(tx-1@fx3bj'
+    ALLOWED_HOSTS = _env_list('DJANGO_ALLOWED_HOSTS')
+
+# フォームを送るときの Origin チェック用。https://example.com のようにスキーム付きで書く。
+CSRF_TRUSTED_ORIGINS = _env_list('DJANGO_CSRF_TRUSTED_ORIGINS')
 
 
 # Application definition
@@ -49,6 +75,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # 本番で CSS/JS/画像を配信する（DEBUG=True のときは runserver が配信する）
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',   # 選んだ言語（クッキー）でページを表示する
     'django.middleware.common.CommonMiddleware',
@@ -141,23 +169,19 @@ LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365
 
 STATIC_URL = 'static/'
 
-# <-- ADD THESE LINES FOR STATIC FILES CONFIGURATION -->
+# mentalhealth/static/ は INSTALLED_APPS のアプリなので自動で見つかる。
+# ここに同じフォルダを書くと collectstatic で全ファイルが二重に見つかるため、追加フォルダは無し。
+STATICFILES_DIRS = []
 
-# This is where Django will look for additional static files
-# (e.g., in your app's 'static' folder, or a project-wide 'static' folder)
-STATICFILES_DIRS = [
-    # Path to your 'mentalhealth' app's static folder
-    # Assuming your app's static files are in peace/mentalhealth/static/
-    os.path.join(BASE_DIR, 'mentalhealth', 'static'),
-    # If you have a project-level static folder (e.g., peace/static/), you'd add it here too:
-    # os.path.join(BASE_DIR, 'static'),
-]
+# python manage.py collectstatic で本番用に静的ファイルを集める場所（run.py prod が自動で実行する）
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# This is the directory where 'python manage.py collectstatic' will gather
-# all static files for deployment. You don't usually serve from here in development.
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# <-- END OF ADDED LINES -->
+if IS_PRODUCTION:
+    # ファイル名に内容のハッシュを付け、圧縮版も作る（長期キャッシュしても古い表示が残らない）
+    STORAGES = {
+        'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+        'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'},
+    }
 
 
 # Default primary key field type
@@ -242,3 +266,50 @@ if not FIELD_ENCRYPTION_KEY:
             f"[dev] Generated a new FIELD_ENCRYPTION_KEY at {_dev_key_path}. "
             "Do not commit this file; set FIELD_ENCRYPTION_KEY via env var in production."
         )
+
+# ==========================================
+# 本番用のセキュリティ設定
+# ==========================================
+# DJANGO_HTTPS=1（本番の既定）なら HTTPS 前提の設定を有効にする。
+# HTTPS を用意する前に本番設定を手元で試すときだけ DJANGO_HTTPS=0 にする。
+if IS_PRODUCTION:
+    _https = _env_bool('DJANGO_HTTPS', True)
+
+    SESSION_COOKIE_SECURE = _https
+    CSRF_COOKIE_SECURE = _https
+    SECURE_SSL_REDIRECT = _https
+    # HSTS: 一度アクセスしたブラウザに「このサイトは HTTPS だけ」と覚えさせる。
+    # 最初は短め（既定 1 時間）で様子を見て、問題なければ DJANGO_HSTS_SECONDS=31536000 に上げる。
+    SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_HSTS_SECONDS', '3600')) if _https else 0
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = _env_bool('DJANGO_HSTS_INCLUDE_SUBDOMAINS', False)
+    SECURE_HSTS_PRELOAD = False
+
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = 'same-origin'
+    SESSION_COOKIE_HTTPONLY = True
+    X_FRAME_OPTIONS = 'DENY'
+
+    if SITE_BASE_URL.startswith('http://127.0.0.1') or SITE_BASE_URL.startswith('http://localhost'):
+        print(
+            "[production] SITE_BASE_URL がローカルのままです。メール内のリンクが壊れるので "
+            "公開URL（例: https://example.com）を設定してください。"
+        )
+
+
+# ==========================================
+# ログ（本番ではエラーをターミナル/ログファイルに出す）
+# ==========================================
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {'format': '{asctime} [{levelname}] {name}: {message}', 'style': '{'},
+    },
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler', 'formatter': 'simple'},
+    },
+    'root': {'handlers': ['console'], 'level': 'INFO' if IS_PRODUCTION else 'WARNING'},
+    'loggers': {
+        'django': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
+    },
+}

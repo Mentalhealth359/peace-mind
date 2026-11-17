@@ -1,0 +1,11 @@
+# 仮想環境（各自のPCで作り直す。Windows / Linux で中身が違うため共有しない）
+venv/
+.venv/
+env/
+
+__pycache__/
+*.pyc
+
+# データベースとそのバックアップ
+*.sqlite3
+*.sqlite3.bak*

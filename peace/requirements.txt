@@ -1,3 +1,6 @@
 Django==5.2.1
 cryptography>=42
 python-dotenv>=1.0
+# 本番用：Webサーバー（Windows / Linux / Mac で動く）と静的ファイル配信
+waitress>=3.0
+whitenoise>=6.6
