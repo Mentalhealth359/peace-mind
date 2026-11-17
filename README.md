@@ -118,9 +118,9 @@ python run.py dev
 | オプション | 内容 |
 |---|---|
 | `--port 8000` | ポート番号（環境変数 `PORT` でも指定できる） |
-| `--host 0.0.0.0` | 待ち受けるアドレス（dev の既定は `127.0.0.1`、prod の既定は `0.0.0.0`） |
+| `--host 127.0.0.1` | 待ち受けるアドレス（既定 `127.0.0.1`。prod で変えると Cloudflare Tunnel を通さずにアクセスできてしまう） |
 | `--threads 8` | prod のみ。同時に処理するリクエスト数 |
-| `--trusted-proxy 127.0.0.1` | prod のみ。前段に nginx などを置くときのプロキシの IP |
+| `--trusted-proxy 127.0.0.1` | prod のみ。cloudflared が接続してくる IP（既定 `127.0.0.1`） |
 | `--skip-setup` | `migrate` / `collectstatic` を実行せずに起動する |
 | `--local` | prod のみ。本番設定を自分の PC で試す（http://localhost で開ける・HTTPS なし） |
 
@@ -158,7 +158,11 @@ python run.py prod
 ```
 
 - **暗号化キーに注意**：開発中に登録した学生のデータを本番でも使うなら、`FIELD_ENCRYPTION_KEY` は新しく作らず、`field_encryption.key` の中身をそのまま使います。鍵が違うと保存済みのデータを読めなくなります。
-- **HTTPS**：本番設定は HTTPS で公開する前提です。nginx などで HTTPS を受けて waitress に渡す場合は、`--trusted-proxy`（または `.env` の `WAITRESS_TRUSTED_PROXY`）にプロキシの IP を書きます。これを書かないと、HTTPS へ転送し続けてページが開けなくなり、接続元の IP もプロキシの IP になってしまいます。
+- **Cloudflare Tunnel で公開します。** HTTPS は Cloudflare が受け持ちます。
+  - `run.py prod` は `127.0.0.1:8000` でだけ待ち受けます。同じマシンの cloudflared（トンネル）以外からは 8000 番に直接つながりません。
+  - cloudflared の設定（`config.yml` の `ingress`）では、`service: http://127.0.0.1:8000` を指定します。
+  - cloudflared（`127.0.0.1`）が付ける `X-Forwarded-For` と `X-Forwarded-Proto` だけを信用します。これで、本当の接続元 IP（レート制限に使う）と、HTTPS で来たかどうかを受け取れます。
+  - cloudflared を別のマシンや Docker コンテナで動かす場合は、`.env` の `WAITRESS_TRUSTED_PROXY` にその IP を書き、`WAITRESS_HOST` を cloudflared から届くアドレスにします。この場合はファイアウォールで、その IP 以外から 8000 番へのアクセスを止めてください。
 - **自分の PC で本番設定を試すとき**：`python run.py prod --local` で起動し、http://localhost:8000/ を開きます。localhost でのアクセスを許可し、HTTPS 用の設定を切ります。インターネットに公開するときは使わないでください。
 - **`400 Bad Request` / `DisallowedHost` が出たら**：アクセスしたドメインが `DJANGO_ALLOWED_HOSTS` に入っていません。起動時に「アクセスできるドメイン」が表示されるので確認してください。手元で `localhost` を開くなら `--local` を付けます。
 - **HSTS**：最初は 1 時間（`DJANGO_HSTS_SECONDS=3600`）にしてあります。問題がなければ 1 年（`31536000`）に上げます。
