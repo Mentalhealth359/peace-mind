@@ -1,0 +1,63 @@
+{% load static calm_static i18n %}{% get_current_language as LANGUAGE_CODE %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#f6f4ee">
+    <title>{% block title %}Peace Mind{% endblock %} - Peace Mind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {% comment %}言語ごとに、その文字がきれいに読めるフォントだけを読み込む{% endcomment %}
+    {% if LANGUAGE_CODE == 'ja' %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Maru+Gothic:wght@400;700&display=swap">
+    {% elif LANGUAGE_CODE == 'ko' %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nunito:wght@400;700&display=swap">
+    {% elif LANGUAGE_CODE == 'zh-hans' %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Nunito:wght@400;700&display=swap">
+    {% elif LANGUAGE_CODE == 'ne' %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Nunito:wght@400;700&display=swap">
+    {% elif LANGUAGE_CODE == 'my' %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700&family=Nunito:wght@400;700&display=swap">
+    {% else %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
+    {% endif %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0" />
+    <link rel="stylesheet" href="{% static_v 'mentalhealth/css/calm.css' %}">
+    {% comment %}JS の中の文章を翻訳するための辞書（gettext 関数が使えるようになる）{% endcomment %}
+    <script src="{% url 'javascript-catalog' %}?lang={{ LANGUAGE_CODE }}"></script>
+    {% block head %}{% endblock %}
+</head>
+{% comment %}
+チャット画面などで下部ナビを出したくないページは {% block bottom_nav %}{% endblock %} で空にする。
+{% endcomment %}
+<body class="{% block body_class %}has-bottom-nav{% endblock %}">
+    {% comment %}
+    上部バー：左＝戻るボタン（各ページの back ブロック）、中央＝ロゴ、右＝言語とアカウント。
+    戻るボタンは {% block back %}{% include 'mentalhealth/_back.html' with url_name='mentalhealth:xxx' label='〜に戻る' %}{% endblock %}
+    {% endcomment %}
+    <header class="calm-topbar">
+        <div class="topbar-left">{% block back %}{% endblock %}</div>
+        <a class="calm-brand" href="{% url 'mentalhealth:index_page' %}" aria-label="{% translate 'Peace Mind ホーム' %}">
+            <span class="material-symbols-outlined" aria-hidden="true">spa</span><span class="brand-text">Peace Mind</span>
+        </a>
+        <div class="topbar-right">
+            {% include 'mentalhealth/_language_menu.html' %}
+            {% include 'mentalhealth/_account_menu.html' %}
+        </div>
+    </header>
+    <main class="calm-main {% block main_class %}{% endblock %}">
+        {% block content %}{% endblock %}
+    </main>
+    {% block footer %}{% endblock %}
+    {% block bottom_nav %}{% include 'mentalhealth/_bottom_nav.html' %}{% endblock %}
+    <script>
+    // 言語・アカウントメニューの外側をタップしたら閉じる
+    document.addEventListener('click', function (e) {
+        document.querySelectorAll('details.account-menu[open]').forEach(function (d) {
+            if (!d.contains(e.target)) d.removeAttribute('open');
+        });
+    });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

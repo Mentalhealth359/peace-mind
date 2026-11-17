@@ -13,8 +13,14 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os # <-- ADD THIS LINE: Import the 'os' module for path manipulation
 
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# .env（BASE_DIR直下）を読み込む。ファイルが無くても何もせず素通りする。
+# 既にOS環境変数が設定されている場合はそちらを優先（override=Falseがデフォルト）。
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -44,6 +50,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',   # 選んだ言語（クッキー）でページを表示する
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -105,10 +112,29 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-LANGUAGE_CODE = 'ja'       # 言語を日本語に
+LANGUAGE_CODE = 'ja'       # 標準の言語は日本語（言語メニューで切り替えられる）
 TIME_ZONE = 'Asia/Tokyo'   # 時間を日本時間に
+
+USE_I18N = True
+
+# 言語メニューに出す言語。名前はその言語自身の表記にする（読めない言語名を避けるため）。
+LANGUAGES = [
+    ('ja', '日本語'),
+    ('en', 'English'),
+    ('ne', 'नेपाली'),
+    ('vi', 'Tiếng Việt'),
+    ('zh-hans', '中文（简体）'),
+    ('ko', '한국어'),
+    ('my', 'မြန်မာဘာသာ'),
+    ('id', 'Bahasa Indonesia'),
+]
+
+# 翻訳ファイル（.po / .mo）の場所。
+# .po を編集したら `python manage.py compile_translations` で .mo を作り直す。
+LOCALE_PATHS = [BASE_DIR / 'mentalhealth' / 'locale']
+
+# 選んだ言語を覚えておくクッキー（1年間）
+LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -139,7 +165,80 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_URL = 'mentalhealth:login'
+LOGIN_REDIRECT_URL = 'mentalhealth:post_login_redirect'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True   # ブラウザを閉じたらセッション終了
+LOGOUT_REDIRECT_URL = 'mentalhealth:index_page'
+
+# ログインはユーザー名ではなく登録メールアドレスで行う。
+# EmailBackendが先に試され、失敗したらDjangoデフォルトのModelBackend（ユーザー名）
+# にフォールバックする（/admin/ のユーザー名ログインを壊さないため）。
+AUTHENTICATION_BACKENDS = [
+    'mentalhealth.auth_backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
-# 開発用：メールを実際には送らず、ターミナルに表示させる設定
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# メール送信設定
+# EMAIL_HOST_USER / EMAIL_HOST_PASSWORD が設定されていれば、
+# Gmail SMTP経由で実際にメールを送る。未設定なら開発用のコンソール出力にフォールバックする
+# （＝ターミナルに印字されるだけで、実際には届かない）。
+#
+# Gmail側の準備:
+#   1. Googleアカウントで2段階認証を有効にする
+#   2. 「アプリパスワード」を発行する（通常のログインパスワードではない）
+#   3. 発行された16桁のパスワードを EMAIL_HOST_PASSWORD として設定する
+#
+# 設定方法: プロジェクト直下（manage.pyと同じ階層）に .env ファイルを作り、
+#   EMAIL_HOST_USER=your_account@gmail.com
+#   EMAIL_HOST_PASSWORD=16桁のアプリパスワード
+#   DEFAULT_FROM_EMAIL=your_account@gmail.com   # 省略時は EMAIL_HOST_USER と同じになる
+# と書く（.env.example を参照）。.env は .gitignore 済みなのでコミットされない。
+# 変更したら runserver を再起動するだけで反映される。
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@peace-mind.local')
+
+# メール本文に載せるリンク（パスワード再設定・新着通知）の組み立てに使う公開URL。
+# リクエストのHostヘッダから作ると偽装されたホスト名のリンクを送らされる危険があるため、固定値を使う。
+SITE_BASE_URL = os.environ.get('SITE_BASE_URL', 'http://127.0.0.1:8000')
+
+
+# ==========================================
+# 匿名相談機能：フィールド暗号化キー
+# ==========================================
+# 学生の実名・連絡先メールなどをDBに保存する前に暗号化するための鍵。
+# 本番環境では必ず環境変数 FIELD_ENCRYPTION_KEY を設定し、このファイルや
+# リポジトリに鍵を残さないこと（シークレットマネージャ等での管理を推奨）。
+#
+# 開発環境でだけ、鍵が無ければ BASE_DIR/field_encryption.key を自動生成して使う。
+# このファイルは .gitignore 済みなので、コミットはされない。
+FIELD_ENCRYPTION_KEY = os.environ.get('FIELD_ENCRYPTION_KEY')
+
+if not FIELD_ENCRYPTION_KEY:
+    if not DEBUG:
+        raise RuntimeError(
+            "FIELD_ENCRYPTION_KEY environment variable is required in production."
+        )
+    _dev_key_path = BASE_DIR / 'field_encryption.key'
+    if _dev_key_path.exists():
+        FIELD_ENCRYPTION_KEY = _dev_key_path.read_text().strip()
+    else:
+        from cryptography.fernet import Fernet
+        FIELD_ENCRYPTION_KEY = Fernet.generate_key().decode()
+        _dev_key_path.write_text(FIELD_ENCRYPTION_KEY)
+        print(
+            f"[dev] Generated a new FIELD_ENCRYPTION_KEY at {_dev_key_path}. "
+            "Do not commit this file; set FIELD_ENCRYPTION_KEY via env var in production."
+        )

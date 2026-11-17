@@ -451,6 +451,90 @@ header.feature-header h1 {
 }
 
 
+/* Corner menu (top-left tab: back + logout) */
+.corner-menu {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.corner-menu-toggle {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.corner-menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    color: #E0F7FA;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s;
+}
+
+.corner-menu-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.corner-menu-panel {
+    position: absolute;
+    top: 54px;
+    left: 0;
+    background: rgba(20, 30, 40, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 170px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+}
+
+.corner-menu-toggle:checked ~ .corner-menu-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.corner-menu-item,
+.corner-menu-logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #E0F7FA;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+
+.corner-menu-item--form {
+    margin: 0;
+}
+
+.corner-menu-item:hover,
+.corner-menu-logout:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
 /* Message bubbles */
 .message-bubble {
     max-width: 70%;

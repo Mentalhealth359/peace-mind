@@ -1,0 +1,40 @@
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load i18n %}
+{% block title %}{% blocktranslate with name=thread.teacher_name %}{{ name }}先生への相談{% endblocktranslate %}{% endblock %}
+{% block back %}{% include 'mentalhealth/_back.html' with url_name='mentalhealth:soudan_page' label='相談一覧に戻る' %}{% endblock %}
+{% block body_class %}{% endblock %}
+{% block bottom_nav %}{% endblock %}
+{% block content %}
+<section class="chat">
+    <div class="chat-header">
+        <span class="avatar"><span class="material-symbols-outlined" aria-hidden="true">forum</span></span>
+        <div>
+            <h1>{{ thread.teacher_name }}{% if thread.teacher_position %} {{ thread.teacher_position }}{% endif %}</h1>
+            <p>{% translate 'あなたの名前・メールアドレスは先生には表示されません' %}</p>
+        </div>
+    </div>
+
+    <div class="chat-messages" aria-live="polite">
+        {% for msg in messages_list %}
+            <div class="bubble{% if msg.is_mine %} bubble--mine{% endif %}">
+                <div class="bubble-who">{% if msg.is_mine %}{% translate 'あなた' %}{% else %}{% blocktranslate with name=thread.teacher_name %}{{ name }}先生{% endblocktranslate %}{% endif %}</div>
+                <div class="bubble-text">{{ msg.content }}</div>
+                <div class="bubble-time">{{ msg.timestamp|date:"n/j H:i" }}</div>
+            </div>
+        {% empty %}
+            <p class="empty">{% translate 'まだメッセージがありません。' %}</p>
+        {% endfor %}
+    </div>
+
+    {% if error %}<div class="notice notice--error" role="alert">{{ error }}</div>{% endif %}
+
+    <form method="post" class="chat-form">
+        {% csrf_token %}
+        <textarea name="message" rows="1" required placeholder="{% translate 'メッセージを入力' %}" aria-label="{% translate 'メッセージ' %}"></textarea>
+        <button type="submit" class="btn" aria-label="{% translate '送信' %}">
+            <span class="material-symbols-outlined" aria-hidden="true">send</span><span class="btn-label">{% translate '送信' %}</span>
+        </button>
+    </form>
+</section>
+{% endblock %}
+{% block scripts %}{% include 'mentalhealth/_chat_script.html' %}{% endblock %}

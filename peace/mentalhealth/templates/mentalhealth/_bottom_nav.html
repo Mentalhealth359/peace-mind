@@ -1,0 +1,27 @@
+{% load i18n %}
+{% comment %}スマホ幅でだけ表示される、アプリのような下部ナビ。今いるページのタブが強調される。{% endcomment %}
+{% with n=request.resolver_match.url_name %}
+<nav class="bottom-nav" aria-label="{% translate 'メインメニュー' %}">
+    <a href="{% url 'mentalhealth:index_page' %}" class="{% if n == 'index_page' %}is-active{% endif %}" {% if n == 'index_page' %}aria-current="page"{% endif %}>
+        <span class="material-symbols-outlined" aria-hidden="true">home</span>{% translate 'ホーム' %}
+    </a>
+    <a href="{% url 'mentalhealth:index_page' %}#check" class="{% if n in 'stress_page depression_page anxiety_page resultanxiety_page' %}is-active{% endif %}">
+        <span class="material-symbols-outlined" aria-hidden="true">favorite</span>{% translate 'チェック' %}
+    </a>
+    {% if user.teacher_profile %}
+    <a href="{% url 'mentalhealth:teacher_inbox' %}" class="{% if n in 'teacher_inbox teacher_thread' %}is-active{% endif %}">
+        <span class="material-symbols-outlined" aria-hidden="true">inbox</span>{% translate '受信箱' %}
+    </a>
+    {% else %}
+    <a href="{% url 'mentalhealth:soudan_page' %}" class="{% if n in 'soudan_page soudan_thread' %}is-active{% endif %}">
+        <span class="material-symbols-outlined" aria-hidden="true">forum</span>{% translate '相談' %}
+    </a>
+    {% endif %}
+    <a href="{% url 'mentalhealth:aichat_page' %}" class="{% if n == 'aichat_page' %}is-active{% endif %}">
+        <span class="material-symbols-outlined" aria-hidden="true">chat_bubble</span>AI
+    </a>
+    <a href="{% url 'mentalhealth:takecare_page' %}" class="{% if n == 'takecare_page' %}is-active{% endif %}">
+        <span class="material-symbols-outlined" aria-hidden="true">spa</span>{% translate 'ケア' %}
+    </a>
+</nav>
+{% endwith %}

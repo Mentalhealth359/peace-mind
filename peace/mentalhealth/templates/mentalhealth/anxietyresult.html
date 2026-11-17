@@ -1,0 +1,22 @@
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load static calm_static i18n %}
+{% block title %}{% translate '不安チェックの結果' %}{% endblock %}
+{% block main_class %}calm-main--reading{% endblock %}
+{% block back %}{% include 'mentalhealth/_back.html' with url_name='mentalhealth:anxiety_page' label='チェックに戻る' %}{% endblock %}
+{% block content %}
+<div class="result-display"
+     id="result-page-display"
+     aria-live="polite"
+     data-soudan-url="{% url 'mentalhealth:soudan_page' %}"
+     data-takecare-url="{% url 'mentalhealth:takecare_page' %}"
+     data-home-url="{% url 'mentalhealth:index_page' %}"
+     data-anxiety-url="{% url 'mentalhealth:anxiety_page' %}"
+     data-ai-url="{% url 'mentalhealth:aichat_page' %}"></div>
+<p class="disclaimer center">
+    {% translate '※このチェックは簡易的なものであり、専門的な診断に代わるものではありません。' %}<br>
+    {% translate '心の不調が続く場合は、専門医や学内の相談窓口にご相談ください。' %}
+</p>
+{% endblock %}
+{% block scripts %}
+<script src="{% static_v 'mentalhealth/js/anxietyresult.js' %}"></script>
+{% endblock %}

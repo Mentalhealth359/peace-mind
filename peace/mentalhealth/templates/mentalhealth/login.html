@@ -1,0 +1,28 @@
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load i18n %}
+{% block title %}{% translate 'ログイン' %}{% endblock %}
+{% block main_class %}calm-main--narrow{% endblock %}
+{% block back %}{% include 'mentalhealth/_back.html' with url_name='mentalhealth:index_page' label='ホームに戻る' %}{% endblock %}
+{% block content %}
+<div class="card">
+    <h1 class="page-title">{% translate 'ログイン' %}</h1>
+    <p class="page-lead">{% translate 'おかえりなさい。ゆっくりで大丈夫です。' %}</p>
+
+    {% if form.non_field_errors %}
+        <div class="notice notice--error" role="alert">{% for error in form.non_field_errors %}{{ error }}{% endfor %}</div>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% include 'mentalhealth/_field.html' with field=form.username %}
+        {% include 'mentalhealth/_field.html' with field=form.password %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <button type="submit" class="btn btn--block">{% translate 'ログイン' %}</button>
+    </form>
+
+    <div class="links">
+        <a href="{% url 'mentalhealth:password_reset' %}">{% translate 'パスワードをお忘れですか？' %}</a>
+        <a href="{% url 'mentalhealth:signup_page' %}{% if next %}?next={{ next|urlencode }}{% endif %}">{% translate 'アカウントを作成する' %}</a>
+    </div>
+</div>
+{% endblock %}

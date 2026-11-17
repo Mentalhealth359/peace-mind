@@ -1,0 +1,99 @@
+/* AIチャットページ固有のスタイル（soudan.cssのチャットUIを流用しつつ、
+   モデル読み込み状況・ツールバー部分だけこのファイルで補う） */
+
+.feature-header .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #BBDEFB;
+    text-decoration: none;
+    font-size: 0.95em;
+    margin-bottom: 15px;
+    transition: color 0.2s;
+}
+
+.feature-header .back-link:hover {
+    color: #E0F7FA;
+}
+
+.ai-status {
+    max-width: 1200px;
+    margin: 10px auto 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 0.85em;
+    color: #BBDEFB;
+}
+
+.ai-status.loading {
+    color: #81D4FA;
+}
+
+.ai-status progress {
+    width: 100%;
+    height: 6px;
+    margin-top: 8px;
+    accent-color: #4FC3F7;
+}
+
+.ai-toolbar {
+    max-width: 1200px;
+    margin: 12px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+}
+
+.ai-toolbar label {
+    font-size: 0.85em;
+    color: #BBDEFB;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.ai-toolbar select {
+    background: rgba(255, 255, 255, 0.08);
+    color: #E0F7FA;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.9em;
+}
+
+.ai-toolbar select option {
+    color: #24241f;
+}
+
+.ai-model-label {
+    max-width: 1200px;
+    margin: 6px auto 0;
+    font-size: 0.7em;
+    color: rgba(224, 247, 250, 0.55);
+    padding: 0 5px;
+}
+
+.ai-chat-view {
+    margin-top: 15px !important;
+}
+
+.ai-fallback-links {
+    display: none;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+    .ai-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

@@ -1,118 +1,102 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>セルフケアのヒント</title>
-    <link rel="stylesheet" href="{% static 'mentalhealth/css/takecare.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-</head>
-<body>
-    <div class="page-container">
-        <header class="page-header">
-            <a href="{% url 'mentalhealth:index_page' %}" class="back-link">
-                <span class="material-symbols-outlined">arrow_back</span>
-                <span>ホームに戻る</span>
-            </a>
-            <h1>セルフケアのヒント</h1>
-            <p>自分自身を大切にする時間も必要です。あなたの状態に合わせて、今日から試せる方法を見つけてみましょう。</p>
-        </header>
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load static calm_static i18n %}
+{% block title %}{% translate 'セルフケアのヒント' %}{% endblock %}
+{% block back %}{% include 'mentalhealth/_back.html' with url_name='mentalhealth:index_page' label='ホームに戻る' %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <span class="page-icon tone-peach"><span class="material-symbols-outlined" aria-hidden="true">self_improvement</span></span>
+    <h1 class="page-title">{% translate 'セルフケアのヒント' %}</h1>
+    <p class="page-lead">{% translate '自分自身を大切にする時間も必要です。全部やらなくて大丈夫。できそうなものを、ひとつだけ試してみましょう。' %}</p>
+</div>
 
-        <main class="content-area">
-            <!-- Tab Navigation -->
-            <div class="tab-navigation">
-                <button class="tab-button active" data-tab="stress">
-                    <span class="material-symbols-outlined">local_fire_department</span>
-                    ストレス
-                </button>
-                <button class="tab-button" data-tab="depression">
-                    <span class="material-symbols-outlined">mood_bad</span>
-                    うつ病
-                </button>
-                <button class="tab-button" data-tab="anxiety">
-                    <span class="material-symbols-outlined">bubble_chart</span>
-                    不安障害
-                </button>
-            </div>
+<div class="tab-navigation" role="tablist" aria-label="{% translate '悩みの種類' %}">
+    <button class="tab-button active" data-tab="stress" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">waves</span>{% translate 'ストレス' %}
+    </button>
+    <button class="tab-button" data-tab="depression" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">cloud</span>{% translate '落ち込み' %}
+    </button>
+    <button class="tab-button" data-tab="anxiety" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">bubble_chart</span>{% translate '不安' %}
+    </button>
+</div>
 
-            <!-- Tab Content -->
-            <div class="tab-content">
-                <!-- Stress Content -->
-                <div id="stress-content" class="care-grid active">
-                    <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">self_improvement</span>
-                        <h2 class="care-title">深呼吸と瞑想</h2>
-                        <p class="care-description">5秒かけて息を吸い、7秒かけてゆっくり吐き出します。これを数分間続けるだけで、心拍数が落ち着き、リラックスできます。</p>
-                    </div>
-                    <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">exercise</span>
-                        <h2 class="care-title">軽い運動</h2>
-                        <p class="care-description">15分程度の散歩やストレッチは、ストレスホルモンを減少させ、気分をリフレッシュさせる効果があります。</p>
-                    </div>
-                    <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">music_note</span>
-                        <h2 class="care-title">好きな音楽を聴く</h2>
-                        <p class="care-description">心地よい音楽は、脳をリラックスさせ、ポジティブな気分を引き出すのに役立ちます。お気に入りのプレイリストを聴いてみましょう。</p>
-                    </div>
-                     <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">timer</span>
-                        <h2 class="care-title">時間管理を見直す</h2>
-                        <p class="care-description">タスクに優先順位をつけ、大きな目標を小さなステップに分解することで、圧倒される感覚を減らすことができます。</p>
-                    </div>
-                </div>
-
-                <!-- Depression Content -->
-                <div id="depression-content" class="care-grid">
-                    <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">checklist</span>
-                        <h2 class="care-title">小さな目標を立てる</h2>
-                        <p class="care-description">「ベッドから出る」「顔を洗う」など、達成可能な小さな目標を立ててクリアすることで、達成感を得て自信を取り戻せます。</p>
-                    </div>
-                    <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">wb_sunny</span>
-                        <h2 class="care-title">日光を浴びる</h2>
-                        <p class="care-description">午前中に15分ほど日光を浴びることは、体内時計を整え、気分を改善するセロトニンの分泌を促します。</p>
-                    </div>
-                    <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">restaurant</span>
-                        <h2 class="care-title">バランスの取れた食事</h2>
-                        <p class="care-description">血糖値を安定させ、エネルギーレベルを維持するために、ジャンクフードを避け、野菜や果物、タンパク質を意識して摂りましょう。</p>
-                    </div>
-                    <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">groups</span>
-                        <h2 class="care-title">人と話す</h2>
-                        <p class="care-description">孤独は気分の落ち込みを悪化させます。信頼できる友人や家族に、自分の気持ちを話してみるだけでも心が軽くなります。</p>
-                    </div>
-                </div>
-
-                <!-- Anxiety Content -->
-                <div id="anxiety-content" class="care-grid">
-                    <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">filter_center_focus</span>
-                        <h2 class="care-title">グラウンディング</h2>
-                        <p class="care-description">不安が強まった時、「目に見えるものを5つ」「触れるものを4つ」「聞こえる音を3つ」…と五感に集中することで、意識を現在に戻します。</p>
-                    </div>
-                     <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">psychology_alt</span>
-                        <h2 class="care-title">思考の客観視</h2>
-                        <p class="care-description">「〜に違いない」という不安な考えが浮かんだら、「本当にそうなる証拠は？」と自問し、客観的な視点を持つ練習をします。</p>
-                    </div>
-                    <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">edit_calendar</span>
-                        <h2 class="care-title">「心配する時間」を設ける</h2>
-                        <p class="care-description">1日のうちで15分だけ「心配するための時間」を決めます。それ以外の時間に心配事が浮かんでも、その時間まで待つようにします。</p>
-                    </div>
-                    <div class="care-card">
-                        <span class="material-symbols-outlined care-icon">coffee</span>
-                        <h2 class="care-title">カフェインを控える</h2>
-                        <p class="care-description">カフェインは交感神経を刺激し、不安や動悸を悪化させることがあります。コーヒーやエナジードリンクの摂取を減らしてみましょう。</p>
-                    </div>
-                </div>
-            </div>
-        </main>
+<div class="tab-content">
+    <div id="stress-content" class="care-grid active">
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">self_improvement</span>
+            <h2 class="care-title">{% translate '深呼吸と瞑想' %}</h2>
+            <p class="care-description">{% translate '5秒かけて息を吸い、7秒かけてゆっくり吐き出します。これを数分間続けるだけで、心拍数が落ち着き、リラックスできます。' %}</p>
+        </div>
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">directions_walk</span>
+            <h2 class="care-title">{% translate '軽い運動' %}</h2>
+            <p class="care-description">{% translate '15分程度の散歩やストレッチは、ストレスホルモンを減少させ、気分をリフレッシュさせる効果があります。' %}</p>
+        </div>
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">music_note</span>
+            <h2 class="care-title">{% translate '好きな音楽を聴く' %}</h2>
+            <p class="care-description">{% translate '心地よい音楽は、脳をリラックスさせ、ポジティブな気分を引き出すのに役立ちます。お気に入りのプレイリストを聴いてみましょう。' %}</p>
+        </div>
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">timer</span>
+            <h2 class="care-title">{% translate '時間管理を見直す' %}</h2>
+            <p class="care-description">{% translate 'タスクに優先順位をつけ、大きな目標を小さなステップに分解することで、圧倒される感覚を減らすことができます。' %}</p>
+        </div>
     </div>
 
-    <script src="{% static 'mentalhealth/js/takecare.js' %}"></script>
-</body>
-</html>
+    <div id="depression-content" class="care-grid">
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">checklist</span>
+            <h2 class="care-title">{% translate '小さな目標を立てる' %}</h2>
+            <p class="care-description">{% translate '「ベッドから出る」「顔を洗う」など、達成可能な小さな目標を立ててクリアすることで、達成感を得て自信を取り戻せます。' %}</p>
+        </div>
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">wb_sunny</span>
+            <h2 class="care-title">{% translate '日光を浴びる' %}</h2>
+            <p class="care-description">{% translate '午前中に15分ほど日光を浴びることは、体内時計を整え、気分を改善するセロトニンの分泌を促します。' %}</p>
+        </div>
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">restaurant</span>
+            <h2 class="care-title">{% translate 'バランスの取れた食事' %}</h2>
+            <p class="care-description">{% translate '血糖値を安定させ、エネルギーレベルを維持するために、ジャンクフードを避け、野菜や果物、タンパク質を意識して摂りましょう。' %}</p>
+        </div>
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">groups</span>
+            <h2 class="care-title">{% translate '人と話す' %}</h2>
+            <p class="care-description">{% translate '孤独は気分の落ち込みを悪化させます。信頼できる友人や家族に、自分の気持ちを話してみるだけでも心が軽くなります。' %}</p>
+        </div>
+    </div>
+
+    <div id="anxiety-content" class="care-grid">
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">filter_center_focus</span>
+            <h2 class="care-title">{% translate 'グラウンディング' %}</h2>
+            <p class="care-description">{% translate '不安が強まった時、「目に見えるものを5つ」「触れるものを4つ」「聞こえる音を3つ」…と五感に集中することで、意識を現在に戻します。' %}</p>
+        </div>
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">psychology_alt</span>
+            <h2 class="care-title">{% translate '思考の客観視' %}</h2>
+            <p class="care-description">{% translate '「〜に違いない」という不安な考えが浮かんだら、「本当にそうなる証拠は？」と自問し、客観的な視点を持つ練習をします。' %}</p>
+        </div>
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">edit_calendar</span>
+            <h2 class="care-title">{% translate '「心配する時間」を設ける' %}</h2>
+            <p class="care-description">{% translate '1日のうちで15分だけ「心配するための時間」を決めます。それ以外の時間に心配事が浮かんでも、その時間まで待つようにします。' %}</p>
+        </div>
+        <div class="care-card">
+            <span class="material-symbols-outlined care-icon" aria-hidden="true">coffee</span>
+            <h2 class="care-title">{% translate 'カフェインを控える' %}</h2>
+            <p class="care-description">{% translate 'カフェインは交感神経を刺激し、不安や動悸を悪化させることがあります。コーヒーやエナジードリンクの摂取を減らしてみましょう。' %}</p>
+        </div>
+    </div>
+</div>
+
+<div class="privacy-note" style="margin-top: 24px;">
+    <span class="material-symbols-outlined" aria-hidden="true">forum</span>
+    <span>{% translate 'セルフケアだけで抱えこまなくて大丈夫です。' %}<a href="{% url 'mentalhealth:soudan_page' %}">{% translate '先生・カウンセラーに相談する' %}</a></span>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static_v 'mentalhealth/js/takecare.js' %}"></script>
+{% endblock %}

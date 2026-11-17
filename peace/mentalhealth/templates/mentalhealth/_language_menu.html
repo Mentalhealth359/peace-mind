@@ -1,0 +1,27 @@
+{% load i18n %}
+{% comment %}
+右上の言語メニュー。選ぶと Django の set_language に送られ、選んだ言語がクッキーに保存される。
+言語名はその言語自身の表記（settings.LANGUAGES）で表示する。
+{% endcomment %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+<details class="account-menu lang-menu">
+    <summary aria-label="{% translate '言語' %} / Language">
+        <span class="material-symbols-outlined" aria-hidden="true">language</span>
+        <span class="lang-current">{{ LANGUAGE_CODE|slice:":2"|upper }}</span>
+    </summary>
+    <div class="account-panel">
+        <div class="menu-user">{% translate '言語' %} / Language</div>
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            {% for code, name in LANGUAGES %}
+                <button type="submit" name="language" value="{{ code }}" lang="{{ code }}"
+                        class="menu-item{% if code == LANGUAGE_CODE %} is-current{% endif %}"
+                        {% if code == LANGUAGE_CODE %}aria-current="true"{% endif %}>
+                    <span class="material-symbols-outlined" aria-hidden="true">{% if code == LANGUAGE_CODE %}check{% endif %}</span>{{ name }}
+                </button>
+            {% endfor %}
+        </form>
+    </div>
+</details>

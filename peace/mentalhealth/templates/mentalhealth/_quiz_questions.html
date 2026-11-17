@@ -1,0 +1,14 @@
+{% comment %}
+セルフチェックの質問一覧。questions / options / name_prefix はビュー（views.py）から渡される。
+input の name（例: q1, gad7_q1）と value は各ページのJSの採点処理と対応しているので変えないこと。
+{% endcomment %}
+{% for question in questions %}
+<div class="question-block">
+    <div class="question-text">{{ forloop.counter }}. {{ question }}</div>
+    <div class="options">
+        {% for value, label in options %}
+        <label><input type="radio" name="{{ name_prefix }}{{ forloop.parentloop.counter }}" value="{{ value }}"{% if forloop.first %} required{% endif %}> {{ label }}</label>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}

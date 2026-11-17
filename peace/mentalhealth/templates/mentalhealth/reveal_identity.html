@@ -1,0 +1,38 @@
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load i18n %}
+{% block title %}{% translate '本人確認（緊急対応用）' %}{% endblock %}
+{% block main_class %}calm-main--narrow{% endblock %}
+{% block back %}{% url 'mentalhealth:teacher_thread' conversation.anonymous_code as back_href %}{% include 'mentalhealth/_back.html' with href=back_href label='スレッドに戻る' %}{% endblock %}
+{% block content %}
+{% translate '（未登録）' as unregistered %}
+<div class="card">
+    <h1 class="page-title">{% translate '本人確認（緊急対応用）' %}</h1>
+    <div class="notice notice--warm">
+        {% translate 'この操作はカウンセラー・管理者専用です。照会理由の入力は必須で、「誰が・いつ・なぜ照会したか」が監査ログに記録され、削除できません。通常の相談対応では使用しないでください。' %}
+    </div>
+
+    <p>{% blocktranslate trimmed with label=conversation.student_label teacher=conversation.teacher.name %}対象スレッド: <strong>{{ label }}</strong>（相談先: {{ teacher }}）{% endblocktranslate %}</p>
+
+    {% if error %}<div class="notice notice--error" role="alert">{{ error }}</div>{% endif %}
+
+    {% if not revealed %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="reason">{% translate '照会理由（必須・監査ログに記録されます）' %}</label>
+                <textarea id="reason" name="reason" required placeholder="{% translate '例：自傷・自殺のリスクが疑われる発言があったため' %}"></textarea>
+            </div>
+            <button type="submit" class="btn btn--block">{% translate '理由を記録して本人情報を表示する' %}</button>
+        </form>
+    {% else %}
+        <dl class="notice">
+            <dt class="fineprint">{% translate '氏名' %}</dt>
+            <dd style="margin:0 0 8px;">{{ revealed.real_name|default:unregistered }}</dd>
+            <dt class="fineprint">{% translate '連絡用メールアドレス' %}</dt>
+            <dd style="margin:0 0 8px;">{{ revealed.real_email|default:unregistered }}</dd>
+            <dt class="fineprint">{% translate '学籍番号' %}</dt>
+            <dd style="margin:0;">{{ revealed.student_number|default:unregistered }}</dd>
+        </dl>
+    {% endif %}
+</div>
+{% endblock %}

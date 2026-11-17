@@ -1,0 +1,82 @@
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load i18n %}
+{% block title %}{% translate 'アカウント情報' %}{% endblock %}
+{% block main_class %}calm-main--reading{% endblock %}
+{% block back %}{% include 'mentalhealth/_back.html' with url_name='mentalhealth:index_page' label='ホームに戻る' %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <span class="page-icon tone-sage"><span class="material-symbols-outlined" aria-hidden="true">account_circle</span></span>
+    <h1 class="page-title">{% translate 'アカウント情報' %}</h1>
+    <p class="page-lead">{% translate 'あなたが登録した内容です。この画面はあなたにしか表示されません。' %}</p>
+</div>
+
+{% if password_changed %}
+    <div class="notice" role="status">
+        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span> {% translate 'パスワードを変更しました。' %}
+    </div>
+{% endif %}
+
+<section class="card" aria-labelledby="info-heading">
+    <h2 id="info-heading">{% translate '登録内容' %}</h2>
+    <dl class="info-list">
+        <div>
+            <dt>{% translate 'ユーザー名' %}</dt>
+            <dd>{{ account_user.username }}</dd>
+        </div>
+        <div>
+            <dt>{% translate 'メールアドレス' %}</dt>
+            <dd>{% if account_user.email %}{{ account_user.email }}{% else %}{% translate '（未登録）' %}{% endif %}</dd>
+        </div>
+        {% if teacher %}
+            <div>
+                <dt>{% translate '氏名' %}</dt>
+                <dd>{{ teacher.name }}{% if teacher.position %} {{ teacher.position }}{% endif %}</dd>
+            </div>
+            {% if teacher.department %}
+            <div>
+                <dt>{% translate '所属' %}</dt>
+                <dd>{{ teacher.department }}</dd>
+            </div>
+            {% endif %}
+        {% endif %}
+        <div>
+            <dt>{% translate 'アカウントの種類' %}</dt>
+            <dd>{% if teacher %}{% translate '教員・カウンセラー' %}{% else %}{% translate '学生' %}{% endif %}</dd>
+        </div>
+        <div>
+            <dt>{% translate '登録日' %}</dt>
+            <dd>{{ account_user.date_joined|date:"DATE_FORMAT" }}</dd>
+        </div>
+        {% if not teacher %}
+        <div>
+            <dt>{% translate '相談中のスレッド' %}</dt>
+            <dd>{% blocktranslate with n=conversation_count %}{{ n }}件{% endblocktranslate %} {% if conversation_count %}<a href="{% url 'mentalhealth:soudan_page' %}">{% translate '相談を見る' %}</a>{% endif %}</dd>
+        </div>
+        {% endif %}
+    </dl>
+</section>
+
+{% if not teacher %}
+<div class="privacy-note" style="margin-top:16px;">
+    <span class="material-symbols-outlined" aria-hidden="true">lock</span>
+    <span>{% translate 'ユーザー名とメールアドレスは、先生には表示されません。先生には「学生 #番号」だけが表示されます。' %}</span>
+</div>
+{% endif %}
+
+<section class="card" aria-labelledby="settings-heading">
+    <h2 id="settings-heading">{% translate '設定' %}</h2>
+    <div class="tile-links" style="padding-top:0;">
+        <a class="tile-link" href="{% url 'mentalhealth:password_change' %}">
+            <span class="material-symbols-outlined" aria-hidden="true">key</span>
+            <span class="tile-link-body"><span class="tile-link-title">{% translate 'パスワードを変更する' %}</span><span class="tile-link-meta">{% translate '今のパスワードがわかる場合' %}</span></span>
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </a>
+    </div>
+    <form method="post" action="{% url 'mentalhealth:logout' %}" style="margin-top:16px;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn--ghost btn--block">
+            <span class="material-symbols-outlined" aria-hidden="true">logout</span>{% translate 'ログアウト' %}
+        </button>
+    </form>
+</section>
+{% endblock %}

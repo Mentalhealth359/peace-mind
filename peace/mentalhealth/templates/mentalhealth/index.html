@@ -1,131 +1,135 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peace Mind</title>
-    <!-- 外部CSSファイルを読み込み -->
-    <link rel="stylesheet" href="{% static 'mentalhealth/css/peace.css' %}" />
-    <!-- Material Symbolsの読み込み -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-</head>
-<body>
-    <section>
-        <h2>平和な心</h2>
-        <!-- Hero Section -->
-        <section class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
-                あなたの心の健康をサポートします。
-            </h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                一人で悩まず、あなたのペースで、心の平和を取り戻すためのリソースがここにあります。
-            </p>
-        </section>
-        <div class="container">
-            <!-- ストレスのカード -->
-            <div class="card">
-                <div class="card-inner">
-                    <div class="box">
-                        <div class="imgBox">
-                            <img src="{% static 'mentalhealth/photo/stress.jpeg' %}" alt="Stress">
-                        </div>
-                        <div class="icon">
-                            <a href="{% url 'mentalhealth:stress_page' %}" class="iconBox">
-                            <span class="material-symbols-outlined">ストレス</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="content">
-                    <!-- ストレスに関する簡単な説明などをここに追加できます -->
-                </div>
-            </div>
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load static calm_static i18n %}
+{% block title %}{% translate 'ホーム' %}{% endblock %}
+{% block content %}
 
-            <!-- うつ病のカード -->
-            <div class="card">
-                <div class="card-inner">
-                    <div class="box">
-                        <div class="imgBox">
-                            <img src="{% static 'mentalhealth/photo/depression.jpeg' %}" alt="Depression">
-                        </div>
-                        <div class="icon">
-                            <a href="{% url 'mentalhealth:depression_page' %}" class="iconBox">
-                                <span class="material-symbols-outlined">うつ病</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="content">
-                    <!-- うつ病に関する簡単な説明などをここに追加できます -->
-                </div>
-            </div>
+<section class="hero rise">
+    <div>
+        <p class="eyebrow" id="greeting">{% translate 'こんにちは' %}</p>
+        <h1 class="display">{% blocktranslate trimmed %}ここは、あなたが<br><em>ひと息</em>つける場所。{% endblocktranslate %}</h1>
+        <p class="hero-lead">{% translate '一人で抱えこまなくて大丈夫。気持ちをたしかめたり、だれかに話したり、自分をいたわったり。今のあなたに合うものを、ゆっくり選んでください。' %}</p>
+        <p class="hero-note">
+            <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+            {% translate 'アカウント登録なしで使えます（先生への相談のときだけ登録をお願いしています）' %}
+        </p>
+        <div class="hero-cta">
+            <a class="btn btn--lg" href="#mood">{% translate '今の気持ちを選ぶ' %}</a>
+            <a class="btn btn--lg btn--glass" href="{% url 'mentalhealth:soudan_page' %}">{% translate '先生に相談する' %}</a>
+        </div>
+    </div>
 
-            <!-- 不安障害のカード -->
-            <div class="card">
-                <div class="card-inner">
-                    <div class="box">
-                        <div class="imgBox">
-                            <img src="{% static 'mentalhealth/photo/anxity.jpeg' %}" alt="Anxiety">
-                        </div>
-                        <div class="icon">
-                            <a href="{% url 'mentalhealth:anxiety_page' %}" class="iconBox">
-                                <span class="material-symbols-outlined">不安</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="content">
-                    <!-- 不安障害に関する簡単な説明などをここに追加できます -->
-                </div>
-            </div>
+    <section class="breath" id="breath" data-phase="idle" aria-labelledby="breath-title">
+        <h2 class="breath-title" id="breath-title">
+            <span class="material-symbols-outlined" aria-hidden="true">air</span>{% translate '1分間の呼吸ガイド' %}
+        </h2>
+        <p class="breath-desc">{% translate '円の動きに合わせて、ゆっくり呼吸するだけ。息を長くはくと体の緊張がゆるみ、気持ちが落ち着きやすくなります。' %}</p>
 
-            <!-- 教員への相談のカード -->
-            <div class="card">
-                <div class="card-inner">
-                    <div class="box">
-                        <div class="imgBox">
-                            <!-- 教員への相談に適した画像に変更することをお勧めします -->
-                            <img src="{% static 'mentalhealth/photo/soso.png' %}" alt="Teacher Consultation"> 
-                        </div>
-                        <div class="icon">
-                            <!-- リンク先をsoudan.htmlに修正 -->
-                            <a href="{% url 'mentalhealth:soudan_page' %}" class="iconBox">
-                                <span class="material-symbols-outlined">教員への相談</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="content">
-                    <!-- 教員への相談に関する簡単な説明などをここに追加できます -->
-                </div>
-            </div>
+        <div class="breath-circle" aria-hidden="true">
+            <span class="breath-inner">
+                <span class="breath-text" id="breathText">{% blocktranslate trimmed %}準備が<br>できたら{% endblocktranslate %}</span>
+                <span class="breath-count" id="breathCount"></span>
+            </span>
+        </div>
 
-           
-            <!-- 新しいカード: Take Care -->
-            <div class="card">
-                <div class="card-inner">
-                    <div class="box">
-                        <div class="imgBox">
-                            <!-- Take Careに適した画像に変更することをお勧めします -->
-                            <img src="{% static 'mentalhealth/photo/takecare.png' %}" alt="Take Care"> 
-                        </div>
-                        <div class="icon">
-                            <!-- リンク先をtakecare.htmlに設定 -->
-                            <a href="{% url 'mentalhealth:takecare_page' %}" class="iconBox">
-                                <span class="material-symbols-outlined">セルフケア</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="content">
-                    <!-- セルフケアに関する簡単な説明などをここに追加できます -->
-                </div>
+        <ol class="breath-steps">
+            <li data-step="in"><span class="step-dot">1</span>{% translate '円が大きくなる → 鼻からすう' %}<span class="step-sec">{% translate '4秒' %}</span></li>
+            <li data-step="hold"><span class="step-dot">2</span>{% translate 'そのまま、息をとめる' %}<span class="step-sec">{% translate '2秒' %}</span></li>
+            <li data-step="out"><span class="step-dot">3</span>{% translate '円が小さくなる → 口からゆっくりはく' %}<span class="step-sec">{% translate '6秒' %}</span></li>
+        </ol>
+
+        <button type="button" class="btn btn--block" id="breathToggle" aria-pressed="false">
+            <span class="material-symbols-outlined" aria-hidden="true">play_arrow</span><span id="breathToggleLabel">{% translate 'はじめる（1分）' %}</span>
+        </button>
+        <p class="breath-caption" id="breathCaption" aria-live="polite">{% translate '5回くり返すと、ちょうど1分です。' %}</p>
+    </section>
+</section>
+
+<aside class="today-word rise" style="--d:1" aria-label="{% translate '今日のことば' %}">
+    <span class="today-word-label">{% translate '今日のことば' %}</span>
+    <p class="today-word-text" id="todayWord">{% translate 'がんばれない日があっても、あなたの価値は変わりません。' %}</p>
+</aside>
+
+<section class="card mood rise" style="--d:2" id="mood" aria-labelledby="mood-heading"
+         data-soudan-url="{% url 'mentalhealth:soudan_page' %}"
+         data-ai-url="{% url 'mentalhealth:aichat_page' %}"
+         data-takecare-url="{% url 'mentalhealth:takecare_page' %}"
+         data-stress-url="{% url 'mentalhealth:stress_page' %}">
+    <h2 id="mood-heading">{% translate '今の気持ちに、いちばん近いのは？' %}</h2>
+    <div class="mood-options" role="group" aria-label="{% translate '今の気持ち' %}">
+        <button type="button" class="mood-option" data-mood="1" aria-pressed="false"><span class="material-symbols-outlined" aria-hidden="true">rainy</span>{% translate 'とてもつらい' %}</button>
+        <button type="button" class="mood-option" data-mood="2" aria-pressed="false"><span class="material-symbols-outlined" aria-hidden="true">cloud</span>{% translate 'しんどい' %}</button>
+        <button type="button" class="mood-option" data-mood="3" aria-pressed="false"><span class="material-symbols-outlined" aria-hidden="true">foggy</span>{% translate 'もやもや' %}</button>
+        <button type="button" class="mood-option" data-mood="4" aria-pressed="false"><span class="material-symbols-outlined" aria-hidden="true">partly_cloudy_day</span>{% translate 'まあまあ' %}</button>
+        <button type="button" class="mood-option" data-mood="5" aria-pressed="false"><span class="material-symbols-outlined" aria-hidden="true">sunny</span>{% translate 'いい感じ' %}</button>
+    </div>
+    <div class="mood-reply" id="moodReply" aria-live="polite" hidden></div>
+    <p class="fineprint"><span class="material-symbols-outlined" aria-hidden="true">lock</span> {% translate '選んだ気持ちは、どこにも保存・送信されません。' %}</p>
+</section>
+
+<section class="home-section" id="check" aria-labelledby="menu-heading">
+    <h2 class="section-title" id="menu-heading">{% translate '今日は、なにをしよう' %}</h2>
+    <p class="section-lead">{% translate 'どれから始めても大丈夫です。' %}</p>
+
+    <div class="bento">
+        <div class="tile tile--check">
+            <span class="material-symbols-outlined tile-deco" aria-hidden="true">favorite</span>
+            <span class="tile-kicker">CHECK</span>
+            <span class="tile-title">{% translate '気持ちを、たしかめる' %}</span>
+            <span class="tile-desc">{% translate 'いくつかの質問に答えるだけ。今の自分の状態を、そっとのぞいてみましょう。回答は保存されません。' %}</span>
+            <div class="tile-links">
+                <a class="tile-link" href="{% url 'mentalhealth:stress_page' %}">
+                    <span class="material-symbols-outlined" aria-hidden="true">waves</span>
+                    <span class="tile-link-body"><span class="tile-link-title">{% translate 'ストレスチェック' %}</span><span class="tile-link-meta">{% translate '30問・約3分' %}</span></span>
+                    <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+                </a>
+                <a class="tile-link" href="{% url 'mentalhealth:depression_page' %}">
+                    <span class="material-symbols-outlined" aria-hidden="true">cloud</span>
+                    <span class="tile-link-body"><span class="tile-link-title">{% translate '気分の落ち込みチェック' %}</span><span class="tile-link-meta">{% translate '9問・約2分' %}</span></span>
+                    <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+                </a>
+                <a class="tile-link" href="{% url 'mentalhealth:anxiety_page' %}">
+                    <span class="material-symbols-outlined" aria-hidden="true">bubble_chart</span>
+                    <span class="tile-link-body"><span class="tile-link-title">{% translate '不安チェック' %}</span><span class="tile-link-meta">{% translate '7問・約1分' %}</span></span>
+                    <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+                </a>
             </div>
         </div>
-    </section>
 
-    <!-- 外部JavaScriptファイルを読み込み -->
-    <script src="{% static 'mentalhealth/js/peace.js' %}"></script>
-</body>
-</html>
+        <a class="tile tile--talk" href="{% url 'mentalhealth:soudan_page' %}">
+            <span class="material-symbols-outlined tile-deco" aria-hidden="true">forum</span>
+            <span class="tile-kicker">TALK</span>
+            <span class="tile-title">{% translate '先生・カウンセラーに相談' %}</span>
+            <span class="tile-desc">{% translate '匿名でメッセージを送れます。名前やメールアドレスは先生に見えません。' %}</span>
+            {% if not user.is_authenticated %}<span class="tile-tag"><span class="material-symbols-outlined" aria-hidden="true">person_add</span>{% translate 'アカウント登録が必要です' %}</span>{% endif %}
+            <span class="tile-arrow"><span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></span>
+        </a>
+
+        <a class="tile tile--ai" href="{% url 'mentalhealth:aichat_page' %}">
+            <span class="material-symbols-outlined tile-deco" aria-hidden="true">chat_bubble</span>
+            <span class="tile-kicker">AI</span>
+            <span class="tile-title">{% translate 'AIに話す' %}</span>
+            <span class="tile-desc">{% translate '会話はこの端末の中だけ。' %}</span>
+            <span class="tile-arrow"><span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></span>
+        </a>
+
+        <a class="tile tile--care" href="{% url 'mentalhealth:takecare_page' %}">
+            <span class="material-symbols-outlined tile-deco" aria-hidden="true">spa</span>
+            <span class="tile-kicker">CARE</span>
+            <span class="tile-title">{% translate 'セルフケア' %}</span>
+            <span class="tile-desc">{% translate '今日からできる小さなこと。' %}</span>
+            <span class="tile-arrow"><span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></span>
+        </a>
+    </div>
+</section>
+
+{% include 'mentalhealth/_help_lines.html' %}
+
+{% endblock %}
+
+{% block footer %}
+<footer class="calm-footer"><span class="brand-text">Peace Mind</span><br>{% translate '学生のこころに、そっと寄りそう場所' %}</footer>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static_v 'mentalhealth/js/peace.js' %}"></script>
+{% endblock %}

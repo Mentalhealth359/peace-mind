@@ -1,0 +1,38 @@
+{% load i18n %}
+{% comment %}右上のアカウント欄。ログイン中ならメニュー、未ログインならログインへのリンク。{% endcomment %}
+{% if user.is_authenticated %}
+<details class="account-menu">
+    <summary aria-label="{% translate 'メニュー' %}">
+        <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
+        <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+    </summary>
+    <div class="account-panel">
+        <div class="menu-user">{{ user.username }}</div>
+        <a class="menu-item" href="{% url 'mentalhealth:account' %}">
+            <span class="material-symbols-outlined" aria-hidden="true">badge</span>{% translate 'アカウント情報' %}
+        </a>
+        {% if user.teacher_profile %}
+            <a class="menu-item" href="{% url 'mentalhealth:teacher_inbox' %}">
+                <span class="material-symbols-outlined" aria-hidden="true">inbox</span>{% translate '相談受信箱' %}
+            </a>
+        {% else %}
+            <a class="menu-item" href="{% url 'mentalhealth:soudan_page' %}">
+                <span class="material-symbols-outlined" aria-hidden="true">forum</span>{% translate '先生への相談' %}
+            </a>
+        {% endif %}
+        <a class="menu-item" href="{% url 'mentalhealth:index_page' %}">
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>{% translate 'ホーム' %}
+        </a>
+        <form method="post" action="{% url 'mentalhealth:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="menu-item">
+                <span class="material-symbols-outlined" aria-hidden="true">logout</span>{% translate 'ログアウト' %}
+            </button>
+        </form>
+    </div>
+</details>
+{% else %}
+<a class="login-link" href="{% url 'mentalhealth:login' %}">
+    <span class="material-symbols-outlined" aria-hidden="true">login</span><span class="login-text">{% translate 'ログイン' %}</span>
+</a>
+{% endif %}

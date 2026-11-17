@@ -1,0 +1,27 @@
+{% load i18n %}{% get_current_language as LANGUAGE_CODE %}
+{% comment %}
+今すぐつらいときの外部相談窓口。番号・受付時間は変わることがあるので、定期的に公式サイトで確認すること。
+学内の相談窓口（学生相談室など）があれば、ここに追加するのがおすすめ。
+{% endcomment %}
+<section class="help-box" id="help" aria-labelledby="help-heading">
+    <h2 id="help-heading"><span class="material-symbols-outlined" aria-hidden="true">favorite</span>{% translate '今すぐ、だれかと話したいとき' %}</h2>
+    <p>{% translate 'つらくて仕方がないとき、消えてしまいたいと感じたときは、電話で話を聞いてもらえます。あなたが連絡していい場所です。' %}</p>
+    <ul class="help-list">
+        <li>
+            <span class="help-name">{% translate 'よりそいホットライン' %}</span>
+            <a class="help-number" href="tel:0120279338">0120-279-338</a>
+            <span class="help-note">{% translate '24時間・無料' %}{% if LANGUAGE_CODE != 'ja' %}{% translate '（外国語での相談は、音声案内で2番）' %}{% endif %}</span>
+        </li>
+        <li>
+            <span class="help-name">{% translate 'いのちの電話（ナビダイヤル）' %}</span>
+            <a class="help-number" href="tel:0570783556">0570-783-556</a>
+            <span class="help-note">{% translate '受付時間は公式サイトでご確認ください' %}</span>
+        </li>
+        <li>
+            <span class="help-name">{% translate 'こころの健康相談統一ダイヤル' %}</span>
+            <a class="help-number" href="tel:0570064556">0570-064-556</a>
+            <span class="help-note">{% translate 'お住まいの地域の窓口につながります' %}</span>
+        </li>
+    </ul>
+    <p class="fineprint">{% translate '命の危険がある緊急時は、119 に電話してください。' %}</p>
+</section>

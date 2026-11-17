@@ -1,0 +1,1227 @@
+# Peace Mind translations - English
+# 原文（msgid）は日本語。訳を直したら `python manage.py compile_translations` を実行する。
+msgid ""
+msgstr ""
+"Project-Id-Version: peace-mind\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: English\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/mentalhealth/_account_menu.html
+msgid "メニュー"
+msgstr "Menu"
+
+#: templates/mentalhealth/_account_menu.html
+msgid "アカウント情報"
+msgstr "Account info"
+
+#: templates/mentalhealth/_account_menu.html
+msgid "相談受信箱"
+msgstr "Consultation inbox"
+
+#: templates/mentalhealth/_account_menu.html
+msgid "先生への相談"
+msgstr "Talk to a counselor"
+
+#: templates/mentalhealth/_account_menu.html
+msgid "ホーム"
+msgstr "Home"
+
+#: templates/mentalhealth/_account_menu.html
+msgid "ログアウト"
+msgstr "Log out"
+
+#: templates/mentalhealth/_account_menu.html
+msgid "ログイン"
+msgstr "Log in"
+
+#: templates/mentalhealth/_back.html
+msgid "戻る"
+msgstr "Back"
+
+#: templates/mentalhealth/_bottom_nav.html
+msgid "メインメニュー"
+msgstr "Main menu"
+
+#: templates/mentalhealth/_bottom_nav.html
+msgid "チェック"
+msgstr "Check"
+
+#: templates/mentalhealth/_bottom_nav.html
+msgid "受信箱"
+msgstr "Inbox"
+
+#: templates/mentalhealth/_bottom_nav.html
+msgid "相談"
+msgstr "Talk"
+
+#: templates/mentalhealth/_bottom_nav.html
+msgid "ケア"
+msgstr "Care"
+
+#: templates/mentalhealth/_calm_base.html
+msgid "Peace Mind ホーム"
+msgstr "Peace Mind home"
+
+#: templates/mentalhealth/_help_lines.html
+msgid "今すぐ、だれかと話したいとき"
+msgstr "If you need to talk to someone right now"
+
+#: templates/mentalhealth/_help_lines.html
+msgid "つらくて仕方がないとき、消えてしまいたいと感じたときは、電話で話を聞いてもらえます。あなたが連絡していい場所です。"
+msgstr "When things feel unbearable, or you feel like disappearing, you can call and someone will listen. You are welcome to reach out."
+
+#: templates/mentalhealth/_help_lines.html
+msgid "よりそいホットライン"
+msgstr "Yorisoi Hotline"
+
+#: templates/mentalhealth/_help_lines.html
+msgid "24時間・無料"
+msgstr "24 hours, free"
+
+#: templates/mentalhealth/_help_lines.html
+msgid "（外国語での相談は、音声案内で2番）"
+msgstr " (for languages other than Japanese, press 2 at the voice guide)"
+
+#: templates/mentalhealth/_help_lines.html
+msgid "いのちの電話（ナビダイヤル）"
+msgstr "Inochi no Denwa (Lifeline)"
+
+#: templates/mentalhealth/_help_lines.html
+msgid "受付時間は公式サイトでご確認ください"
+msgstr "Please check the official website for hours"
+
+#: templates/mentalhealth/_help_lines.html
+msgid "こころの健康相談統一ダイヤル"
+msgstr "Mental Health Consultation Dial"
+
+#: templates/mentalhealth/_help_lines.html
+msgid "お住まいの地域の窓口につながります"
+msgstr "Connects you to the office in your area"
+
+#: templates/mentalhealth/_help_lines.html
+msgid "命の危険がある緊急時は、119 に電話してください。"
+msgstr "If a life is in danger, call 119."
+
+#: templates/mentalhealth/_language_menu.html
+msgid "言語"
+msgstr "Language"
+
+#: templates/mentalhealth/_quiz_meta.html
+msgid "回答は保存されません"
+msgstr "Answers are not saved"
+
+#: templates/mentalhealth/_quiz_meta.html
+msgid "%(count)s問"
+msgstr "%(count)s questions"
+
+#: templates/mentalhealth/_quiz_meta.html
+msgid "約%(minutes)s分"
+msgstr "About %(minutes)s min"
+
+#: templates/mentalhealth/_quiz_progress.html
+msgid "0 / %(count)s 問"
+msgstr "0 / %(count)s"
+
+#: templates/mentalhealth/account.html
+msgid "あなたが登録した内容です。この画面はあなたにしか表示されません。"
+msgstr "This is the information you registered. Only you can see this page."
+
+#: templates/mentalhealth/account.html
+msgid "パスワードを変更しました。"
+msgstr "Your password has been changed."
+
+#: templates/mentalhealth/account.html
+msgid "登録内容"
+msgstr "Registered information"
+
+#: templates/mentalhealth/account.html
+msgid "ユーザー名"
+msgstr "Username"
+
+#: templates/mentalhealth/account.html
+msgid "メールアドレス"
+msgstr "Email address"
+
+#: templates/mentalhealth/account.html
+msgid "（未登録）"
+msgstr "(not registered)"
+
+#: templates/mentalhealth/account.html
+msgid "氏名"
+msgstr "Name"
+
+#: templates/mentalhealth/account.html
+msgid "所属"
+msgstr "Department"
+
+#: templates/mentalhealth/account.html
+msgid "アカウントの種類"
+msgstr "Account type"
+
+#: templates/mentalhealth/account.html
+msgid "教員・カウンセラー"
+msgstr "Teacher / counselor"
+
+#: templates/mentalhealth/account.html
+msgid "学生"
+msgstr "Student"
+
+#: templates/mentalhealth/account.html
+msgid "登録日"
+msgstr "Registered on"
+
+#: templates/mentalhealth/account.html
+msgid "相談中のスレッド"
+msgstr "Your conversations"
+
+#: templates/mentalhealth/account.html
+msgid "相談を見る"
+msgstr "View conversations"
+
+#: templates/mentalhealth/account.html
+msgid "ユーザー名とメールアドレスは、先生には表示されません。先生には「学生 #番号」だけが表示されます。"
+msgstr "Your username and email address are never shown to counselors. They only see “Student #number”."
+
+#: templates/mentalhealth/account.html
+msgid "設定"
+msgstr "Settings"
+
+#: templates/mentalhealth/account.html
+msgid "パスワードを変更する"
+msgstr "Change password"
+
+#: templates/mentalhealth/account.html
+msgid "今のパスワードがわかる場合"
+msgstr "If you know your current password"
+
+#: templates/mentalhealth/account.html
+msgid "%(n)s件"
+msgstr "%(n)s"
+
+#: templates/mentalhealth/account.html
+msgid "ホームに戻る"
+msgstr "Back to home"
+
+#: templates/mentalhealth/aichat.html
+msgid "AIチャット"
+msgstr "AI chat"
+
+#: templates/mentalhealth/aichat.html
+msgid "AIに話してみる"
+msgstr "Talk to the AI"
+
+#: templates/mentalhealth/aichat.html
+msgid "うまく言葉にできなくても大丈夫。思いついたことを、そのまま書いてみてください。準備中でも、もう書きはじめられます。"
+msgstr "It’s okay if you can’t find the right words. Just write whatever comes to mind. You can start typing even while the AI is getting ready."
+
+#: templates/mentalhealth/aichat.html
+msgid "会話はこの端末（ブラウザ）の中だけで処理され、サーバーには一切送信されません。"
+msgstr "Your conversation is processed only on this device (in your browser) and is never sent to a server."
+
+#: templates/mentalhealth/aichat.html
+msgid "AIを準備しています…"
+msgstr "Getting the AI ready…"
+
+#: templates/mentalhealth/aichat.html
+msgid "先生に相談する"
+msgstr "Talk to a counselor"
+
+#: templates/mentalhealth/aichat.html
+msgid "セルフケアのヒント"
+msgstr "Self-care tips"
+
+#: templates/mentalhealth/aichat.html
+msgid "AIとの会話"
+msgstr "Conversation with the AI"
+
+#: templates/mentalhealth/aichat.html
+msgid "5分間操作がないと、会話は自動で消えます"
+msgstr "The conversation is deleted automatically after 5 minutes of inactivity"
+
+#: templates/mentalhealth/aichat.html
+msgid "会話を終える"
+msgstr "End conversation"
+
+#: templates/mentalhealth/aichat.html
+msgid "ここに入力…（Shift+Enterで改行）"
+msgstr "Type here… (Shift+Enter for a new line)"
+
+#: templates/mentalhealth/aichat.html
+msgid "メッセージ"
+msgstr "Message"
+
+#: templates/mentalhealth/aichat.html
+msgid "送信"
+msgstr "Send"
+
+#: templates/mentalhealth/aichat.html
+msgid "表示の設定"
+msgstr "Display settings"
+
+#: templates/mentalhealth/aichat.html
+msgid "返事を少しずつ表示する（文字化けする場合は外してください）"
+msgstr "Show replies as they are written (turn off if characters look garbled)"
+
+#: templates/mentalhealth/aichat.html
+msgid "「会話を終える」を押したとき・<strong>5分間なにも操作がないとき</strong>・このページを離れたときに、会話は自動で消えます。"
+msgstr "The conversation is deleted automatically when you press “End conversation”, <strong>after 5 minutes of inactivity</strong>, or when you leave this page."
+
+#: templates/mentalhealth/aichat.html
+msgid "AIの返答は専門家の助言ではありません。つらさが続くときは、先生や<a href=\"%(home_url)s#help\">相談窓口</a>に話してください。"
+msgstr "The AI’s replies are not professional advice. If you keep feeling distressed, please talk to a counselor or a <a href=\"%(home_url)s#help\">support line</a>."
+
+#: templates/mentalhealth/anxiety.html
+msgid "不安チェック"
+msgstr "Anxiety check"
+
+#: templates/mentalhealth/anxiety.html
+msgid "正解・不正解はありません。最近の自分をふり返って、直感で選んでください。"
+msgstr "There are no right or wrong answers. Think about how you have been lately and choose what feels right."
+
+#: templates/mentalhealth/anxiety.html
+msgid "この2週間で、次のことにどのくらい悩まされましたか？"
+msgstr "Over the last 2 weeks, how often have you been bothered by the following?"
+
+#: templates/mentalhealth/anxiety.html
+msgid "結果を見る"
+msgstr "See results"
+
+#: templates/mentalhealth/anxietyresult.html
+msgid "不安チェックの結果"
+msgstr "Anxiety check results"
+
+#: templates/mentalhealth/anxietyresult.html
+msgid "※このチェックは簡易的なものであり、専門的な診断に代わるものではありません。"
+msgstr "* This is a simple self-check and does not replace a professional diagnosis."
+
+#: templates/mentalhealth/anxietyresult.html
+msgid "心の不調が続く場合は、専門医や学内の相談窓口にご相談ください。"
+msgstr "If you keep feeling unwell, please consult a specialist or the campus counseling office."
+
+#: templates/mentalhealth/anxietyresult.html
+msgid "チェックに戻る"
+msgstr "Back to the check"
+
+#: templates/mentalhealth/depression.html
+msgid "気分の落ち込みチェック"
+msgstr "Low mood check"
+
+#: templates/mentalhealth/index.html
+msgid "こんにちは"
+msgstr "Hello"
+
+#: templates/mentalhealth/index.html
+msgid "一人で抱えこまなくて大丈夫。気持ちをたしかめたり、だれかに話したり、自分をいたわったり。今のあなたに合うものを、ゆっくり選んでください。"
+msgstr "You don’t have to carry everything alone. Check in with your feelings, talk to someone, or take care of yourself. Take your time and choose what suits you right now."
+
+#: templates/mentalhealth/index.html
+msgid "アカウント登録なしで使えます（先生への相談のときだけ登録をお願いしています）"
+msgstr "No account needed (we only ask you to register when you want to talk to a counselor)"
+
+#: templates/mentalhealth/index.html
+msgid "今の気持ちを選ぶ"
+msgstr "How are you feeling?"
+
+#: templates/mentalhealth/index.html
+msgid "1分間の呼吸ガイド"
+msgstr "1-minute breathing guide"
+
+#: templates/mentalhealth/index.html
+msgid "円の動きに合わせて、ゆっくり呼吸するだけ。息を長くはくと体の緊張がゆるみ、気持ちが落ち着きやすくなります。"
+msgstr "Just breathe slowly along with the circle. Breathing out slowly relaxes your body and helps calm your mind."
+
+#: templates/mentalhealth/index.html
+msgid "円が大きくなる → 鼻からすう"
+msgstr "Circle grows → breathe in through your nose"
+
+#: templates/mentalhealth/index.html
+msgid "4秒"
+msgstr "4 sec"
+
+#: templates/mentalhealth/index.html
+msgid "そのまま、息をとめる"
+msgstr "Hold your breath"
+
+#: templates/mentalhealth/index.html
+msgid "2秒"
+msgstr "2 sec"
+
+#: templates/mentalhealth/index.html
+msgid "円が小さくなる → 口からゆっくりはく"
+msgstr "Circle shrinks → breathe out slowly through your mouth"
+
+#: templates/mentalhealth/index.html
+msgid "6秒"
+msgstr "6 sec"
+
+#: templates/mentalhealth/index.html
+msgid "はじめる（1分）"
+msgstr "Start (1 min)"
+
+#: templates/mentalhealth/index.html
+msgid "5回くり返すと、ちょうど1分です。"
+msgstr "5 rounds take exactly 1 minute."
+
+#: templates/mentalhealth/index.html
+msgid "今日のことば"
+msgstr "Words for today"
+
+#: templates/mentalhealth/index.html
+msgid "がんばれない日があっても、あなたの価値は変わりません。"
+msgstr "Even on days when you can’t try your best, your worth doesn’t change."
+
+#: templates/mentalhealth/index.html
+msgid "今の気持ちに、いちばん近いのは？"
+msgstr "Which is closest to how you feel right now?"
+
+#: templates/mentalhealth/index.html
+msgid "今の気持ち"
+msgstr "How you feel now"
+
+#: templates/mentalhealth/index.html
+msgid "とてもつらい"
+msgstr "Very hard"
+
+#: templates/mentalhealth/index.html
+msgid "しんどい"
+msgstr "Tired"
+
+#: templates/mentalhealth/index.html
+msgid "もやもや"
+msgstr "Uneasy"
+
+#: templates/mentalhealth/index.html
+msgid "まあまあ"
+msgstr "Okay"
+
+#: templates/mentalhealth/index.html
+msgid "いい感じ"
+msgstr "Good"
+
+#: templates/mentalhealth/index.html
+msgid "選んだ気持ちは、どこにも保存・送信されません。"
+msgstr "Your choice is never saved or sent anywhere."
+
+#: templates/mentalhealth/index.html
+msgid "今日は、なにをしよう"
+msgstr "What would you like to do today?"
+
+#: templates/mentalhealth/index.html
+msgid "どれから始めても大丈夫です。"
+msgstr "You can start with anything."
+
+#: templates/mentalhealth/index.html
+msgid "気持ちを、たしかめる"
+msgstr "Check in with your feelings"
+
+#: templates/mentalhealth/index.html
+msgid "いくつかの質問に答えるだけ。今の自分の状態を、そっとのぞいてみましょう。回答は保存されません。"
+msgstr "Just answer a few questions and gently look at how you are doing. Your answers are not saved."
+
+#: templates/mentalhealth/index.html
+msgid "ストレスチェック"
+msgstr "Stress check"
+
+#: templates/mentalhealth/index.html
+msgid "30問・約3分"
+msgstr "30 questions · about 3 min"
+
+#: templates/mentalhealth/index.html
+msgid "9問・約2分"
+msgstr "9 questions · about 2 min"
+
+#: templates/mentalhealth/index.html
+msgid "7問・約1分"
+msgstr "7 questions · about 1 min"
+
+#: templates/mentalhealth/index.html
+msgid "先生・カウンセラーに相談"
+msgstr "Talk to a teacher or counselor"
+
+#: templates/mentalhealth/index.html
+msgid "匿名でメッセージを送れます。名前やメールアドレスは先生に見えません。"
+msgstr "Send messages anonymously. Counselors cannot see your name or email address."
+
+#: templates/mentalhealth/index.html
+msgid "アカウント登録が必要です"
+msgstr "Account required"
+
+#: templates/mentalhealth/index.html
+msgid "AIに話す"
+msgstr "Talk to the AI"
+
+#: templates/mentalhealth/index.html
+msgid "会話はこの端末の中だけ。"
+msgstr "Conversations stay on this device."
+
+#: templates/mentalhealth/index.html
+msgid "セルフケア"
+msgstr "Self-care"
+
+#: templates/mentalhealth/index.html
+msgid "今日からできる小さなこと。"
+msgstr "Small things you can start today."
+
+#: templates/mentalhealth/index.html
+msgid "学生のこころに、そっと寄りそう場所"
+msgstr "A gentle place of support for students’ hearts"
+
+#: templates/mentalhealth/index.html
+msgid "ここは、あなたが<br><em>ひと息</em>つける場所。"
+msgstr "A place where you can<br><em>take a breath</em>."
+
+#: templates/mentalhealth/index.html
+msgid "準備が<br>できたら"
+msgstr "When you’re<br>ready"
+
+#: templates/mentalhealth/login.html
+msgid "おかえりなさい。ゆっくりで大丈夫です。"
+msgstr "Welcome back. Take your time."
+
+#: templates/mentalhealth/login.html
+msgid "パスワードをお忘れですか？"
+msgstr "Forgot your password?"
+
+#: templates/mentalhealth/login.html
+msgid "アカウントを作成する"
+msgstr "Create an account"
+
+#: templates/mentalhealth/password_change.html
+msgid "パスワードの変更"
+msgstr "Change password"
+
+#: templates/mentalhealth/password_change.html
+msgid "今のパスワードと、新しいパスワードを入力してください。"
+msgstr "Enter your current password and your new password."
+
+#: templates/mentalhealth/password_change.html
+msgid "変更する"
+msgstr "Change"
+
+#: templates/mentalhealth/password_change.html
+msgid "今のパスワードを忘れた場合"
+msgstr "If you forgot your current password"
+
+#: templates/mentalhealth/password_change.html
+msgid "アカウント情報に戻る"
+msgstr "Back to account info"
+
+#: templates/mentalhealth/password_reset_complete.html
+msgid "パスワードを変更しました"
+msgstr "Password changed"
+
+#: templates/mentalhealth/password_reset_complete.html
+msgid "新しいパスワードでログインできます。安全のため、ほかの端末でのログインは解除されています。"
+msgstr "You can now log in with your new password. For your safety, you have been logged out on other devices."
+
+#: templates/mentalhealth/password_reset_complete.html
+msgid "ログインする"
+msgstr "Log in"
+
+#: templates/mentalhealth/password_reset_request.html
+msgid "パスワードの再設定"
+msgstr "Reset your password"
+
+#: templates/mentalhealth/password_reset_request.html
+msgid "登録しているメールアドレスを入力してください。新しいパスワードを設定するためのリンクをお送りします。"
+msgstr "Enter the email address you registered. We will send you a link to set a new password."
+
+#: templates/mentalhealth/password_reset_request.html
+msgid "短い時間にリクエストが続いたため、いったん受付を止めています。少し時間をおいて（1時間ほど）からもう一度お試しください。"
+msgstr "There have been too many requests in a short time, so we have paused them for now. Please wait a while (about an hour) and try again."
+
+#: templates/mentalhealth/password_reset_request.html
+msgid "リンクを送る"
+msgstr "Send link"
+
+#: templates/mentalhealth/password_reset_request.html
+msgid "ログイン画面に戻る"
+msgstr "Back to login"
+
+#: templates/mentalhealth/password_reset_request.html
+msgid "ログインに戻る"
+msgstr "Back to login"
+
+#: templates/mentalhealth/password_reset_sent.html
+msgid "メールを確認してください"
+msgstr "Check your email"
+
+#: templates/mentalhealth/password_reset_sent.html
+msgid "入力されたメールアドレスが登録されている場合、パスワード再設定用のリンクを送信しました。"
+msgstr "If this email address is registered, we have sent a password reset link."
+
+#: templates/mentalhealth/password_reset_sent.html
+msgid "リンクの有効期限は30分で、1回だけ使えます。数分たっても届かない場合は、迷惑メールフォルダもご確認ください。"
+msgstr "The link is valid for 30 minutes and can be used only once. If it doesn’t arrive within a few minutes, please check your spam folder."
+
+#: templates/mentalhealth/password_reset_set.html
+msgid "新しいパスワードの設定"
+msgstr "Set a new password"
+
+#: templates/mentalhealth/password_reset_set.html
+msgid "このリンクは使えません"
+msgstr "This link can’t be used"
+
+#: templates/mentalhealth/password_reset_set.html
+msgid "リンクの有効期限（30分）が切れているか、すでに使用済みです。お手数ですが、もう一度リクエストしてください。"
+msgstr "The link has expired (30 minutes) or has already been used. Please request a new one."
+
+#: templates/mentalhealth/password_reset_set.html
+msgid "もう一度リンクを送る"
+msgstr "Send a new link"
+
+#: templates/mentalhealth/password_reset_set.html
+msgid "新しいパスワードを2回入力してください。"
+msgstr "Enter your new password twice."
+
+#: templates/mentalhealth/reveal_identity.html
+msgid "本人確認（緊急対応用）"
+msgstr "Identity check (emergencies only)"
+
+#: templates/mentalhealth/reveal_identity.html
+msgid "この操作はカウンセラー・管理者専用です。照会理由の入力は必須で、「誰が・いつ・なぜ照会したか」が監査ログに記録され、削除できません。通常の相談対応では使用しないでください。"
+msgstr "This action is for counselors and administrators only. A reason is required, and who looked up the identity, when, and why is recorded in an audit log that cannot be deleted. Do not use this for normal consultations."
+
+#: templates/mentalhealth/reveal_identity.html
+msgid "照会理由（必須・監査ログに記録されます）"
+msgstr "Reason (required, recorded in the audit log)"
+
+#: templates/mentalhealth/reveal_identity.html
+msgid "例：自傷・自殺のリスクが疑われる発言があったため"
+msgstr "e.g. The student said something suggesting a risk of self-harm or suicide"
+
+#: templates/mentalhealth/reveal_identity.html
+msgid "理由を記録して本人情報を表示する"
+msgstr "Record the reason and show identity"
+
+#: templates/mentalhealth/reveal_identity.html
+msgid "連絡用メールアドレス"
+msgstr "Contact email address"
+
+#: templates/mentalhealth/reveal_identity.html
+msgid "学籍番号"
+msgstr "Student ID number"
+
+#: templates/mentalhealth/reveal_identity.html
+msgid "対象スレッド: <strong>%(label)s</strong>（相談先: %(teacher)s）"
+msgstr "Conversation: <strong>%(label)s</strong> (counselor: %(teacher)s)"
+
+#: templates/mentalhealth/reveal_identity.html
+msgid "スレッドに戻る"
+msgstr "Back to conversation"
+
+#: templates/mentalhealth/signup.html
+msgid "アカウント作成"
+msgstr "Create an account"
+
+#: templates/mentalhealth/signup.html
+msgid "アカウントが必要なのは「先生への相談」だけです。登録は1分ほどで終わり、終わったらそのまま相談をはじめられます。"
+msgstr "You only need an account to talk to a counselor. Registration takes about a minute, and then you can start right away."
+
+#: templates/mentalhealth/signup.html
+msgid "ここで登録したユーザー名・メールアドレスは、先生には一切表示されません。先生には匿名の番号だけが表示されます。"
+msgstr "The username and email address you register here are never shown to counselors. They only see an anonymous number."
+
+#: templates/mentalhealth/signup.html
+msgid "登録する"
+msgstr "Register"
+
+#: templates/mentalhealth/signup.html
+msgid "すでにアカウントをお持ちの方はこちら"
+msgstr "Already have an account? Log in"
+
+#: templates/mentalhealth/soudan.html
+msgid "困っていること、話したいことを、自分のペースで書いてみてください。"
+msgstr "Write about what’s troubling you or what you’d like to talk about, at your own pace."
+
+#: templates/mentalhealth/soudan.html
+msgid "やり取りは匿名です。先生にはあなたの名前・メールアドレスは表示されず、「学生 #番号」とだけ表示されます。命に関わる緊急時に限り、権限のある管理者が理由を記録した上で本人確認を行う場合があります。"
+msgstr "Your messages are anonymous. Counselors cannot see your name or email address; they only see “Student #number”. Only in a life-threatening emergency may an authorized administrator check your identity, after recording the reason."
+
+#: templates/mentalhealth/soudan.html
+msgid "これまでの相談"
+msgstr "Your conversations"
+
+#: templates/mentalhealth/soudan.html
+msgid "まだ相談はありません。"
+msgstr "No conversations yet."
+
+#: templates/mentalhealth/soudan.html
+msgid "新しく相談を始める"
+msgstr "Start a new conversation"
+
+#: templates/mentalhealth/soudan.html
+msgid "同じ先生への相談は、同じスレッドに続けて記録されます。"
+msgstr "Messages to the same counselor continue in the same conversation."
+
+#: templates/mentalhealth/soudan.html
+msgid "相談したい先生"
+msgstr "Counselor you want to talk to"
+
+#: templates/mentalhealth/soudan.html
+msgid "選択してください"
+msgstr "Please choose"
+
+#: templates/mentalhealth/soudan.html
+msgid "相談内容"
+msgstr "Your message"
+
+#: templates/mentalhealth/soudan.html
+msgid "うまくまとまっていなくても大丈夫です"
+msgstr "It’s okay if your thoughts aren’t organized"
+
+#: templates/mentalhealth/soudan.html
+msgid "送信する"
+msgstr "Send"
+
+#: templates/mentalhealth/soudan.html
+msgid "未読 %(n)s件"
+msgstr "%(n)s unread"
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "先生・カウンセラーへの相談"
+msgstr "Talk to a teacher or counselor"
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "相談をはじめるには、アカウントの作成をお願いしています。先生からの返信を、あなたにだけ届けるためです。"
+msgstr "To start a conversation, please create an account. This lets us deliver the counselor’s replies only to you."
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "アカウントを作っても、匿名のままです"
+msgstr "You stay anonymous even with an account"
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "名前もメールアドレスも、先生には見えません。"
+msgstr "Counselors can’t see your name or email address."
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "先生の画面には「学生 #A3F9C2E1」のような番号だけが表示されます。"
+msgstr "They only see a number like “Student #A3F9C2E1”."
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "返信が届いたら、メールでお知らせします。"
+msgstr "We’ll email you when a reply arrives."
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "メールに相談内容は書かれません。お知らせはシステムから届くので、先生にあなたのアドレスが伝わることはありません。"
+msgstr "The email does not include your conversation. Notices come from the system, so your address is never shared with counselors."
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "登録は1分ほど。"
+msgstr "Registration takes about a minute."
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "ユーザー名・メールアドレス・パスワードだけで作れます。"
+msgstr "All you need is a username, an email address, and a password."
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "アカウントを作成して相談する"
+msgstr "Create an account and start"
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "すでにアカウントをお持ちの方はログイン"
+msgstr "Already have an account? Log in"
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "アカウントなしでも使えます"
+msgstr "Available without an account"
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "相談以外の機能は、登録しなくてもすぐに使えます。"
+msgstr "Everything except counseling can be used right away without registering."
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "気持ちのセルフチェック"
+msgstr "Self-check of your feelings"
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "ストレス・落ち込み・不安"
+msgstr "Stress, low mood, anxiety"
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "会話はこの端末の中だけ"
+msgstr "Conversations stay on this device"
+
+#: templates/mentalhealth/soudan_gate.html
+msgid "今日からできる小さなこと"
+msgstr "Small things you can start today"
+
+#: templates/mentalhealth/soudan_thread.html
+msgid "あなたの名前・メールアドレスは先生には表示されません"
+msgstr "Your name and email address are not shown to the counselor"
+
+#: templates/mentalhealth/soudan_thread.html
+msgid "あなた"
+msgstr "You"
+
+#: templates/mentalhealth/soudan_thread.html
+msgid "まだメッセージがありません。"
+msgstr "No messages yet."
+
+#: templates/mentalhealth/soudan_thread.html
+msgid "メッセージを入力"
+msgstr "Type a message"
+
+#: templates/mentalhealth/soudan_thread.html
+msgid "%(name)s先生への相談"
+msgstr "Talking with %(name)s"
+
+#: templates/mentalhealth/soudan_thread.html
+msgid "%(name)s先生"
+msgstr "%(name)s"
+
+#: templates/mentalhealth/soudan_thread.html
+msgid "相談一覧に戻る"
+msgstr "Back to conversations"
+
+#: templates/mentalhealth/takecare.html
+msgid "自分自身を大切にする時間も必要です。全部やらなくて大丈夫。できそうなものを、ひとつだけ試してみましょう。"
+msgstr "Taking time to care for yourself matters too. You don’t have to do everything — just try one thing that feels doable."
+
+#: templates/mentalhealth/takecare.html
+msgid "悩みの種類"
+msgstr "Type of concern"
+
+#: templates/mentalhealth/takecare.html
+msgid "ストレス"
+msgstr "Stress"
+
+#: templates/mentalhealth/takecare.html
+msgid "落ち込み"
+msgstr "Low mood"
+
+#: templates/mentalhealth/takecare.html
+msgid "不安"
+msgstr "Anxiety"
+
+#: templates/mentalhealth/takecare.html
+msgid "深呼吸と瞑想"
+msgstr "Deep breathing and meditation"
+
+#: templates/mentalhealth/takecare.html
+msgid "5秒かけて息を吸い、7秒かけてゆっくり吐き出します。これを数分間続けるだけで、心拍数が落ち着き、リラックスできます。"
+msgstr "Breathe in for 5 seconds and slowly out for 7 seconds. Doing this for a few minutes calms your heart rate and helps you relax."
+
+#: templates/mentalhealth/takecare.html
+msgid "軽い運動"
+msgstr "Light exercise"
+
+#: templates/mentalhealth/takecare.html
+msgid "15分程度の散歩やストレッチは、ストレスホルモンを減少させ、気分をリフレッシュさせる効果があります。"
+msgstr "A 15-minute walk or some stretching lowers stress hormones and refreshes your mood."
+
+#: templates/mentalhealth/takecare.html
+msgid "好きな音楽を聴く"
+msgstr "Listen to music you like"
+
+#: templates/mentalhealth/takecare.html
+msgid "心地よい音楽は、脳をリラックスさせ、ポジティブな気分を引き出すのに役立ちます。お気に入りのプレイリストを聴いてみましょう。"
+msgstr "Pleasant music relaxes the brain and helps bring out a positive mood. Try listening to your favorite playlist."
+
+#: templates/mentalhealth/takecare.html
+msgid "時間管理を見直す"
+msgstr "Rethink your time management"
+
+#: templates/mentalhealth/takecare.html
+msgid "タスクに優先順位をつけ、大きな目標を小さなステップに分解することで、圧倒される感覚を減らすことができます。"
+msgstr "Prioritizing tasks and breaking big goals into small steps can reduce the feeling of being overwhelmed."
+
+#: templates/mentalhealth/takecare.html
+msgid "小さな目標を立てる"
+msgstr "Set small goals"
+
+#: templates/mentalhealth/takecare.html
+msgid "「ベッドから出る」「顔を洗う」など、達成可能な小さな目標を立ててクリアすることで、達成感を得て自信を取り戻せます。"
+msgstr "Setting and completing small, achievable goals like “get out of bed” or “wash my face” gives you a sense of accomplishment and helps rebuild confidence."
+
+#: templates/mentalhealth/takecare.html
+msgid "日光を浴びる"
+msgstr "Get some sunlight"
+
+#: templates/mentalhealth/takecare.html
+msgid "午前中に15分ほど日光を浴びることは、体内時計を整え、気分を改善するセロトニンの分泌を促します。"
+msgstr "About 15 minutes of morning sunlight resets your body clock and boosts serotonin, which improves mood."
+
+#: templates/mentalhealth/takecare.html
+msgid "バランスの取れた食事"
+msgstr "Eat a balanced diet"
+
+#: templates/mentalhealth/takecare.html
+msgid "血糖値を安定させ、エネルギーレベルを維持するために、ジャンクフードを避け、野菜や果物、タンパク質を意識して摂りましょう。"
+msgstr "To keep your blood sugar stable and maintain your energy, avoid junk food and try to eat vegetables, fruit, and protein."
+
+#: templates/mentalhealth/takecare.html
+msgid "人と話す"
+msgstr "Talk to someone"
+
+#: templates/mentalhealth/takecare.html
+msgid "孤独は気分の落ち込みを悪化させます。信頼できる友人や家族に、自分の気持ちを話してみるだけでも心が軽くなります。"
+msgstr "Loneliness can make low mood worse. Just telling a trusted friend or family member how you feel can lighten your heart."
+
+#: templates/mentalhealth/takecare.html
+msgid "グラウンディング"
+msgstr "Grounding"
+
+#: templates/mentalhealth/takecare.html
+msgid "不安が強まった時、「目に見えるものを5つ」「触れるものを4つ」「聞こえる音を3つ」…と五感に集中することで、意識を現在に戻します。"
+msgstr "When anxiety rises, focus on your senses — “5 things you can see”, “4 things you can touch”, “3 sounds you can hear” — to bring your attention back to the present."
+
+#: templates/mentalhealth/takecare.html
+msgid "思考の客観視"
+msgstr "Look at your thoughts objectively"
+
+#: templates/mentalhealth/takecare.html
+msgid "「〜に違いない」という不安な考えが浮かんだら、「本当にそうなる証拠は？」と自問し、客観的な視点を持つ練習をします。"
+msgstr "When an anxious thought like “this must be true” comes up, ask yourself “What is the evidence?” and practice seeing it objectively."
+
+#: templates/mentalhealth/takecare.html
+msgid "「心配する時間」を設ける"
+msgstr "Set a “worry time”"
+
+#: templates/mentalhealth/takecare.html
+msgid "1日のうちで15分だけ「心配するための時間」を決めます。それ以外の時間に心配事が浮かんでも、その時間まで待つようにします。"
+msgstr "Set aside just 15 minutes a day as “worry time”. If worries come up at other times, save them for that time."
+
+#: templates/mentalhealth/takecare.html
+msgid "カフェインを控える"
+msgstr "Cut back on caffeine"
+
+#: templates/mentalhealth/takecare.html
+msgid "カフェインは交感神経を刺激し、不安や動悸を悪化させることがあります。コーヒーやエナジードリンクの摂取を減らしてみましょう。"
+msgstr "Caffeine stimulates your nervous system and can make anxiety and palpitations worse. Try drinking less coffee and fewer energy drinks."
+
+#: templates/mentalhealth/takecare.html
+msgid "セルフケアだけで抱えこまなくて大丈夫です。"
+msgstr "You don’t have to handle everything with self-care alone."
+
+#: templates/mentalhealth/takecare.html
+msgid "先生・カウンセラーに相談する"
+msgstr "Talk to a teacher or counselor"
+
+#: templates/mentalhealth/teacher_inbox.html
+msgid "生徒の氏名・メールアドレスはこの画面には送られません。生徒は「学生 #番号」で表示されます。"
+msgstr "Students’ names and email addresses are never sent to this page. Students are shown as “Student #number”."
+
+#: templates/mentalhealth/teacher_inbox.html
+msgid "相談スレッド"
+msgstr "Conversations"
+
+#: templates/mentalhealth/teacher_inbox.html
+msgid "まだ相談は届いていません。"
+msgstr "No messages have arrived yet."
+
+#: templates/mentalhealth/teacher_inbox.html
+msgid "%(name)s %(position)s 様"
+msgstr "%(name)s %(position)s"
+
+#: templates/mentalhealth/teacher_thread.html
+msgid "匿名の生徒"
+msgstr "Anonymous student"
+
+#: templates/mentalhealth/teacher_thread.html
+msgid "返信を入力"
+msgstr "Type a reply"
+
+#: templates/mentalhealth/teacher_thread.html
+msgid "返信"
+msgstr "Reply"
+
+#: templates/mentalhealth/teacher_thread.html
+msgid "返信を送る"
+msgstr "Send reply"
+
+#: templates/mentalhealth/teacher_thread.html
+msgid "緊急時のみ：本人確認をリクエストする"
+msgstr "Emergencies only: request an identity check"
+
+#: templates/mentalhealth/teacher_thread.html
+msgid "（管理者権限が必要・記録されます）"
+msgstr " (administrator permission required; this is recorded)"
+
+#: templates/mentalhealth/teacher_thread.html
+msgid "受信箱に戻る"
+msgstr "Back to inbox"
+
+#: forms.py
+msgid "登録しているメールアドレス"
+msgstr "Your registered email address"
+
+#: forms.py
+msgid "このメールアドレスは既に登録されています。"
+msgstr "This email address is already registered."
+
+#: models.py
+msgid "学生 #%(code)s"
+msgstr "Student #%(code)s"
+
+#: password_reset.py
+msgid "【Peace Mind】パスワード再設定のご案内"
+msgstr "[Peace Mind] Reset your password"
+
+#: password_reset.py
+msgid ""
+"Peace Mind のパスワード再設定がリクエストされました。\n"
+"下のリンクから新しいパスワードを設定してください。"
+msgstr ""
+"A password reset was requested for your Peace Mind account.\n"
+"Please set a new password using the link below."
+
+#: password_reset.py
+msgid ""
+"このリンクの有効期限は%(minutes)s分で、1回だけ使えます。\n"
+"心当たりがない場合は、このメールを無視してください。パスワードは変更されません。"
+msgstr ""
+"This link is valid for %(minutes)s minutes and can be used only once.\n"
+"If you did not request this, please ignore this email. Your password will not be changed."
+
+#: questionnaires.py
+msgid "よく風邪をひくし、風邪が治りにくい。"
+msgstr "I often catch colds, and they take a long time to go away."
+
+#: questionnaires.py
+msgid "手、足が冷たいことが多い。"
+msgstr "My hands and feet are often cold."
+
+#: questionnaires.py
+msgid "手のひらや、わきの下に汗をかくことが多い。"
+msgstr "I often sweat on my palms or under my arms."
+
+#: questionnaires.py
+msgid "急に息苦しくなることがある。"
+msgstr "I sometimes suddenly find it hard to breathe."
+
+#: questionnaires.py
+msgid "動悸がすることがある。"
+msgstr "I sometimes have heart palpitations."
+
+#: questionnaires.py
+msgid "胸が苦しくなることがある。"
+msgstr "I sometimes feel tightness in my chest."
+
+#: questionnaires.py
+msgid "頭がすっきりしない(頭が重い)。"
+msgstr "My head doesn’t feel clear (it feels heavy)."
+
+#: questionnaires.py
+msgid "目がよく疲れる。"
+msgstr "My eyes often get tired."
+
+#: questionnaires.py
+msgid "鼻づまりすることがある。"
+msgstr "I sometimes have a stuffy nose."
+
+#: questionnaires.py
+msgid "めまいを感じることがある。"
+msgstr "I sometimes feel dizzy."
+
+#: questionnaires.py
+msgid "立ちくらみしそうになる。"
+msgstr "I sometimes feel lightheaded when I stand up."
+
+#: questionnaires.py
+msgid "耳鳴りがすることがある。"
+msgstr "I sometimes have ringing in my ears."
+
+#: questionnaires.py
+msgid "口の中が荒れたり、ただれたりすることがよくある。"
+msgstr "I often get sores or irritation in my mouth."
+
+#: questionnaires.py
+msgid "のどが痛くなることが多い。"
+msgstr "I often get a sore throat."
+
+#: questionnaires.py
+msgid "舌が白くなっていることが多い。"
+msgstr "My tongue is often white."
+
+#: questionnaires.py
+msgid "好きなものでも食べる気がしない。"
+msgstr "I don’t feel like eating, even foods I like."
+
+#: questionnaires.py
+msgid "いつも食べ物が胃にもたれるような気がする。"
+msgstr "Food always seems to sit heavily in my stomach."
+
+#: questionnaires.py
+msgid "腹が張ったり、痛んだり下痢や便秘をすることがよくある。"
+msgstr "I often have a bloated or painful stomach, diarrhea, or constipation."
+
+#: questionnaires.py
+msgid "肩がこりやすい。"
+msgstr "My shoulders get stiff easily."
+
+#: questionnaires.py
+msgid "背中や腰が痛くなることがよくある。"
+msgstr "I often have back or lower back pain."
+
+#: questionnaires.py
+msgid "なかなか疲れが取れない。"
+msgstr "I can’t seem to shake off my tiredness."
+
+#: questionnaires.py
+msgid "このごろ体重が減った。"
+msgstr "I have lost weight recently."
+
+#: questionnaires.py
+msgid "何かするとすぐに疲れる。"
+msgstr "I get tired quickly whenever I do something."
+
+#: questionnaires.py
+msgid "気持ちよく起きられないことがよくある。"
+msgstr "I often can’t wake up feeling refreshed."
+
+#: questionnaires.py
+msgid "仕事をやる気が起こらない。"
+msgstr "I can’t find the motivation to work or study."
+
+#: questionnaires.py
+msgid "寝つきが悪い。"
+msgstr "I have trouble falling asleep."
+
+#: questionnaires.py
+msgid "夢を見ることが多い。"
+msgstr "I dream a lot."
+
+#: questionnaires.py
+msgid "夜中に目が覚めたあと、なかなか寝つけない。"
+msgstr "When I wake up in the night, it’s hard to fall back asleep."
+
+#: questionnaires.py
+msgid "人と付き合うのがおっくうになってきた。"
+msgstr "Spending time with people has started to feel like a chore."
+
+#: questionnaires.py
+msgid "ちょっとしたことでも腹がたったり、いらいらしそうになることが多い。"
+msgstr "Even small things often make me angry or irritated."
+
+#: questionnaires.py
+msgid "何をしても興味や喜びを感じない"
+msgstr "Little interest or pleasure in doing things"
+
+#: questionnaires.py
+msgid "気分が沈む、憂うつになる、または絶望的な気持ちになる"
+msgstr "Feeling down, depressed, or hopeless"
+
+#: questionnaires.py
+msgid "寝つきが悪い、途中で目が覚める、または眠りすぎる"
+msgstr "Trouble falling or staying asleep, or sleeping too much"
+
+#: questionnaires.py
+msgid "疲れた感じがする、または気力がない"
+msgstr "Feeling tired or having little energy"
+
+#: questionnaires.py
+msgid "食欲がない、または食べすぎる"
+msgstr "Poor appetite or overeating"
+
+#: questionnaires.py
+msgid "自分はだめな人間だ、人生に失敗した、自分や家族を失望させたと感じる"
+msgstr "Feeling bad about yourself — or that you are a failure or have let yourself or your family down"
+
+#: questionnaires.py
+msgid "新聞を読む、テレビを見るなど、物事に集中するのが難しい"
+msgstr "Trouble concentrating on things, such as reading the newspaper or watching television"
+
+#: questionnaires.py
+msgid "他の人が気づくほど動きや話し方が遅い。または反対に、そわそわして落ち着かず、いつもより動き回っている"
+msgstr "Moving or speaking so slowly that other people could have noticed — or the opposite: being so fidgety or restless that you have been moving around a lot more than usual"
+
+#: questionnaires.py
+msgid "死んだ方がましだ、あるいは自分を何らかの方法で傷つけようと思ったことがある"
+msgstr "Thoughts that you would be better off dead, or of hurting yourself in some way"
+
+#: questionnaires.py
+msgid "緊張感、不安感、または神経が高ぶるのを感じる"
+msgstr "Feeling nervous, anxious, or on edge"
+
+#: questionnaires.py
+msgid "心配することを止められない、またはコントロールできない"
+msgstr "Not being able to stop or control worrying"
+
+#: questionnaires.py
+msgid "いろいろなことを心配しすぎる"
+msgstr "Worrying too much about different things"
+
+#: questionnaires.py
+msgid "くつろぐことが難しい"
+msgstr "Trouble relaxing"
+
+#: questionnaires.py
+msgid "じっとしていられないほど落ち着かない"
+msgstr "Being so restless that it is hard to sit still"
+
+#: questionnaires.py
+msgid "いらいらしやすい、または怒りっぽい"
+msgstr "Becoming easily annoyed or irritable"
+
+#: questionnaires.py
+msgid "何か恐ろしいことが起こるかもしれないと感じる"
+msgstr "Feeling afraid, as if something awful might happen"
+
+#: questionnaires.py
+msgid "はい"
+msgstr "Yes"
+
+#: questionnaires.py
+msgid "いいえ"
+msgstr "No"
+
+#: questionnaires.py
+msgid "全くない"
+msgstr "Not at all"
+
+#: questionnaires.py
+msgid "数日"
+msgstr "Several days"
+
+#: questionnaires.py
+msgid "半分以上の日"
+msgstr "More than half the days"
+
+#: questionnaires.py
+msgid "ほぼ毎日"
+msgstr "Nearly every day"
+
+#: services.py
+msgid "【Peace Mind】新しい匿名相談メッセージがあります"
+msgstr "[Peace Mind] You have a new anonymous message"
+
+#: services.py
+msgid ""
+"学内匿名相談システムに新しいメッセージが届いています。\n"
+"内容はメールには記載されません。アプリにログインしてご確認ください。"
+msgstr ""
+"A new message has arrived in the campus anonymous consultation system.\n"
+"The content is not included in this email. Please log in to the app to read it."
+
+#: services.py
+msgid "【Peace Mind】先生から返信が届いています"
+msgstr "[Peace Mind] You have a reply from your counselor"
+
+#: services.py
+msgid ""
+"Peace Mind の相談に、先生から返信が届いています。\n"
+"内容はメールには記載されません。アプリにログインしてご確認ください。"
+msgstr ""
+"Your counselor has replied to your Peace Mind conversation.\n"
+"The content is not included in this email. Please log in to the app to read it."
+
+#: services.py
+msgid "短時間に送信できるメッセージ数の上限（%(max)s件/%(minutes)s分）に達しました。しばらく待ってから再度お試しください。"
+msgstr "You have reached the limit of messages you can send in a short time (%(max)s per %(minutes)s minutes). Please wait a while and try again."
+
+#: views.py
+msgid "相談したい先生を選んでください。"
+msgstr "Please choose a counselor."
+
+#: views.py
+msgid "メッセージを入力してください。"
+msgstr "Please enter a message."
+
+#: views.py
+msgid "照会理由の入力は必須です（監査ログに記録されます）。"
+msgstr "A reason is required (it will be recorded in the audit log)."
+

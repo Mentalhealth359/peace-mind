@@ -1,0 +1,36 @@
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load i18n %}
+{% block title %}{% translate '相談受信箱' %}{% endblock %}
+{% block back %}{% include 'mentalhealth/_back.html' with url_name='mentalhealth:index_page' label='ホームに戻る' %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <span class="page-icon tone-sage"><span class="material-symbols-outlined" aria-hidden="true">inbox</span></span>
+    <h1 class="page-title">{% translate '相談受信箱' %}</h1>
+    <p class="page-lead">{% blocktranslate trimmed with name=teacher_name position=teacher_position %}{{ name }} {{ position }} 様{% endblocktranslate %}</p>
+</div>
+
+<div class="privacy-note">
+    <span class="material-symbols-outlined" aria-hidden="true">shield_person</span>
+    <span>{% translate '生徒の氏名・メールアドレスはこの画面には送られません。生徒は「学生 #番号」で表示されます。' %}</span>
+</div>
+
+<section class="card" aria-labelledby="inbox-heading">
+    <h2 id="inbox-heading">{% translate '相談スレッド' %}</h2>
+    <ul class="thread-list">
+        {% for conv in conversations %}
+            <li>
+                <a class="thread-link" href="{% url 'mentalhealth:teacher_thread' conv.anonymous_code %}">
+                    <span class="avatar"><span class="material-symbols-outlined" aria-hidden="true">person</span></span>
+                    <span class="thread-meta">
+                        <span class="thread-name">{{ conv.student_label }}</span>
+                        <span class="thread-time">{{ conv.last_message_at|date:"SHORT_DATETIME_FORMAT" }}</span>
+                    </span>
+                    {% if conv.unread_count %}<span class="badge" aria-label="{% blocktranslate with n=conv.unread_count %}未読 {{ n }}件{% endblocktranslate %}">{{ conv.unread_count }}</span>{% endif %}
+                </a>
+            </li>
+        {% empty %}
+            <li class="empty">{% translate 'まだ相談は届いていません。' %}</li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

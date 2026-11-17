@@ -1,0 +1,7 @@
+{% comment %}フォーム項目1つ分。使い方: {% include 'mentalhealth/_field.html' with field=form.email %}{% endcomment %}
+<div class="field">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.errors %}<ul class="errorlist">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+    {% if field.help_text %}<div class="helptext">{{ field.help_text|safe }}</div>{% endif %}
+</div>

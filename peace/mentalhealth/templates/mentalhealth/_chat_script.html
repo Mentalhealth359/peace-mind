@@ -1,0 +1,12 @@
+<script>
+// 最新のメッセージが見えるよう一番下までスクロールし、入力欄は内容に合わせて高さを広げる
+(function () {
+    var box = document.querySelector('.chat-messages');
+    if (box) box.scrollTop = box.scrollHeight;
+    var ta = document.querySelector('.chat-form textarea');
+    if (ta) ta.addEventListener('input', function () {
+        ta.style.height = 'auto';
+        ta.style.height = Math.min(ta.scrollHeight, 160) + 'px';
+    });
+})();
+</script>

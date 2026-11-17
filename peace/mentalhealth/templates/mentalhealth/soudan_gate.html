@@ -1,0 +1,63 @@
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load i18n %}
+{% block title %}{% translate '先生・カウンセラーへの相談' %}{% endblock %}
+{% block main_class %}calm-main--reading{% endblock %}
+{% block back %}{% include 'mentalhealth/_back.html' with url_name='mentalhealth:index_page' label='ホームに戻る' %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <span class="page-icon tone-sage"><span class="material-symbols-outlined" aria-hidden="true">forum</span></span>
+    <h1 class="page-title">{% translate '先生・カウンセラーへの相談' %}</h1>
+    <p class="page-lead">{% translate '相談をはじめるには、アカウントの作成をお願いしています。先生からの返信を、あなたにだけ届けるためです。' %}</p>
+</div>
+
+<section class="card" aria-labelledby="why-heading">
+    <h2 id="why-heading">{% translate 'アカウントを作っても、匿名のままです' %}</h2>
+    <ul class="gate-points">
+        <li>
+            <span class="material-symbols-outlined" aria-hidden="true">visibility_off</span>
+            <span><strong>{% translate '名前もメールアドレスも、先生には見えません。' %}</strong><br>{% translate '先生の画面には「学生 #A3F9C2E1」のような番号だけが表示されます。' %}</span>
+        </li>
+        <li>
+            <span class="material-symbols-outlined" aria-hidden="true">mark_email_unread</span>
+            <span><strong>{% translate '返信が届いたら、メールでお知らせします。' %}</strong><br>{% translate 'メールに相談内容は書かれません。お知らせはシステムから届くので、先生にあなたのアドレスが伝わることはありません。' %}</span>
+        </li>
+        <li>
+            <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
+            <span><strong>{% translate '登録は1分ほど。' %}</strong><br>{% translate 'ユーザー名・メールアドレス・パスワードだけで作れます。' %}</span>
+        </li>
+    </ul>
+
+    <div class="gate-actions">
+        <a class="btn btn--lg btn--block" href="{% url 'mentalhealth:signup_page' %}?next={{ next|urlencode }}">
+            <span class="material-symbols-outlined" aria-hidden="true">person_add</span>{% translate 'アカウントを作成して相談する' %}
+        </a>
+        <a class="btn btn--ghost btn--block" href="{% url 'mentalhealth:login' %}?next={{ next|urlencode }}">
+            {% translate 'すでにアカウントをお持ちの方はログイン' %}
+        </a>
+    </div>
+</section>
+
+<section class="card" aria-labelledby="free-heading">
+    <h2 id="free-heading">{% translate 'アカウントなしでも使えます' %}</h2>
+    <p class="page-lead" style="margin-bottom:12px;">{% translate '相談以外の機能は、登録しなくてもすぐに使えます。' %}</p>
+    <div class="tile-links" style="padding-top:0;">
+        <a class="tile-link" href="{% url 'mentalhealth:index_page' %}#check">
+            <span class="material-symbols-outlined" aria-hidden="true">favorite</span>
+            <span class="tile-link-body"><span class="tile-link-title">{% translate '気持ちのセルフチェック' %}</span><span class="tile-link-meta">{% translate 'ストレス・落ち込み・不安' %}</span></span>
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </a>
+        <a class="tile-link" href="{% url 'mentalhealth:aichat_page' %}">
+            <span class="material-symbols-outlined" aria-hidden="true">chat_bubble</span>
+            <span class="tile-link-body"><span class="tile-link-title">{% translate 'AIに話す' %}</span><span class="tile-link-meta">{% translate '会話はこの端末の中だけ' %}</span></span>
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </a>
+        <a class="tile-link" href="{% url 'mentalhealth:takecare_page' %}">
+            <span class="material-symbols-outlined" aria-hidden="true">spa</span>
+            <span class="tile-link-body"><span class="tile-link-title">{% translate 'セルフケアのヒント' %}</span><span class="tile-link-meta">{% translate '今日からできる小さなこと' %}</span></span>
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </a>
+    </div>
+</section>
+
+{% include 'mentalhealth/_help_lines.html' %}
+{% endblock %}

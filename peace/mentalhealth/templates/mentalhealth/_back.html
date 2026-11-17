@@ -1,0 +1,10 @@
+{% load i18n %}
+{% comment %}
+左上の戻るボタン。使い方:
+  {% include 'mentalhealth/_back.html' with url_name='mentalhealth:index_page' label='ホームに戻る' %}
+  引数つきURLのときは {% url ... as back_href %} を作ってから with href=back_href で渡す。
+  label は日本語で渡せば、ここで今の言語に翻訳される（翻訳ファイルに登録しておくこと）。
+{% endcomment %}
+<a class="back-btn" href="{% if href %}{{ href }}{% else %}{% url url_name %}{% endif %}">
+    <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span><span class="back-full">{% if label %}{% translate label %}{% else %}{% translate '戻る' %}{% endif %}</span><span class="back-short">{% translate '戻る' %}</span>
+</a>

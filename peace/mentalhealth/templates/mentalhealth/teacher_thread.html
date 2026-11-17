@@ -1,0 +1,43 @@
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load i18n %}
+{% block title %}{{ thread.student_label }}{% endblock %}
+{% block back %}{% include 'mentalhealth/_back.html' with url_name='mentalhealth:teacher_inbox' label='受信箱に戻る' %}{% endblock %}
+{% block body_class %}{% endblock %}
+{% block bottom_nav %}{% endblock %}
+{% block content %}
+<section class="chat">
+    <div class="chat-header">
+        <span class="avatar"><span class="material-symbols-outlined" aria-hidden="true">person</span></span>
+        <div>
+            <h1>{{ thread.student_label }}</h1>
+            <p>{% translate '匿名の生徒' %}</p>
+        </div>
+    </div>
+
+    <div class="chat-messages" aria-live="polite">
+        {% for msg in messages_list %}
+            <div class="bubble{% if msg.is_mine %} bubble--mine{% endif %}">
+                <div class="bubble-who">{% if msg.is_mine %}{% translate 'あなた' %}{% else %}{{ thread.student_label }}{% endif %}</div>
+                <div class="bubble-text">{{ msg.content }}</div>
+                <div class="bubble-time">{{ msg.timestamp|date:"n/j H:i" }}</div>
+            </div>
+        {% empty %}
+            <p class="empty">{% translate 'まだメッセージがありません。' %}</p>
+        {% endfor %}
+    </div>
+
+    {% if error %}<div class="notice notice--error" role="alert">{{ error }}</div>{% endif %}
+
+    <form method="post" class="chat-form">
+        {% csrf_token %}
+        <textarea name="message" rows="1" required placeholder="{% translate '返信を入力' %}" aria-label="{% translate '返信' %}"></textarea>
+        <button type="submit" class="btn" aria-label="{% translate '返信を送る' %}">
+            <span class="material-symbols-outlined" aria-hidden="true">send</span><span class="btn-label">{% translate '返信' %}</span>
+        </button>
+    </form>
+</section>
+<p class="chat-footnote">
+    <a href="{% url 'mentalhealth:reveal_identity' thread.anonymous_code %}">{% translate '緊急時のみ：本人確認をリクエストする' %}</a>{% translate '（管理者権限が必要・記録されます）' %}
+</p>
+{% endblock %}
+{% block scripts %}{% include 'mentalhealth/_chat_script.html' %}{% endblock %}

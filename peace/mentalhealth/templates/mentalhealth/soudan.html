@@ -1,110 +1,67 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学内匿名相談システム</title>
-    <style>
-        body { font-family: "Helvetica Neue", Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #2c3e50; font-size: 22px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #ddd; }
-        .description { background-color: #e8f4fd; padding: 15px; border-radius: 5px; font-size: 14px; margin-bottom: 20px; border-left: 5px solid #3498db; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; color: #444; }
-        input[type="text"], input[type="email"], select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
-        textarea { height: 150px; resize: vertical; }
-        .toggle-container { display: flex; align-items: center; margin-bottom: 20px; padding: 10px; background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 4px; }
-        .toggle-container input { margin-right: 10px; transform: scale(1.5); }
-        .toggle-label { font-weight: bold; color: #856404; }
-        button { width: 100%; padding: 15px; background-color: #27ae60; color: white; border: none; border-radius: 4px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background-color 0.3s; }
-        button:hover { background-color: #219150; }
-        #personalInfoSection { transition: all 0.3s ease-in-out; overflow: hidden; }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h1>教員・相談窓口への連絡フォーム</h1>
-
-    <div class="description">
-        <p><strong>【プライバシー保護について】</strong><br>
-        「匿名モード」を利用すると、あなたの氏名やメールアドレスは相手（先生）には公開されず、システムが仲介してメッセージのみを届けます。</p>
-    </div>
-    
-    <form id="contactForm" method="post">
-        {% csrf_token %} <div class="toggle-container">
-            <input type="checkbox" id="isAnonymous" name="isAnonymous">
-            <label for="isAnonymous" class="toggle-label">匿名で相談する（先生に名前を明かさない）</label>
-        </div>
-
-        <div class="form-group">
-            <label for="recipient">相談したい相手（先生・窓口）</label>
-            <select id="recipient" name="recipient" required>
-                <option value="">選択してください</option>
-                {% for teacher in teachers %}
-                    <option value="{{ teacher.id }}">{{ teacher.name }} ({{ teacher.department }})</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div id="personalInfoSection">
-            <div class="form-group">
-                <label for="studentId">学籍番号</label>
-                <input type="text" id="studentId" name="studentId" placeholder="2024A001">
-            </div>
-
-            <div class="form-group">
-                <label for="name">氏名</label>
-                <input type="text" id="name" name="name" placeholder="大学 太郎">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="email">返信用メールアドレス <span style="color:red">*</span></label>
-            <input type="email" id="email" name="email" placeholder="返信を受け取るためのアドレス" required>
-            <small style="color:#666; display:block; margin-top:5px;">
-                ※匿名モードの場合、このアドレスは先生には通知されず、システムからの転送通知のみに使用されます。
-            </small>
-        </div>
-
-        <div class="form-group">
-            <label for="subject">件名 <span style="color:red">*</span></label>
-            <input type="text" id="subject" name="subject" required>
-        </div>
-
-        <div class="form-group">
-            <label for="message">相談内容 <span style="color:red">*</span></label>
-            <textarea id="message" name="message" required></textarea>
-        </div>
-
-        <button type="submit" id="submitBtn">送信する</button>
-    </form>
+{% extends 'mentalhealth/_calm_base.html' %}
+{% load i18n %}
+{% block title %}{% translate '先生への相談' %}{% endblock %}
+{% block back %}{% include 'mentalhealth/_back.html' with url_name='mentalhealth:index_page' label='ホームに戻る' %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <span class="page-icon tone-sage"><span class="material-symbols-outlined" aria-hidden="true">forum</span></span>
+    <h1 class="page-title">{% translate '先生への相談' %}</h1>
+    <p class="page-lead">{% translate '困っていること、話したいことを、自分のペースで書いてみてください。' %}</p>
 </div>
 
-<script>
-    const checkbox = document.getElementById('isAnonymous');
-    const personalInfo = document.getElementById('personalInfoSection');
-    const inputs = personalInfo.querySelectorAll('input');
+<div class="privacy-note">
+    <span class="material-symbols-outlined" aria-hidden="true">lock</span>
+    <span>
+        {% translate 'やり取りは匿名です。先生にはあなたの名前・メールアドレスは表示されず、「学生 #番号」とだけ表示されます。命に関わる緊急時に限り、権限のある管理者が理由を記録した上で本人確認を行う場合があります。' %}
+    </span>
+</div>
 
-    // 匿名チェックボックスの切り替え処理（見た目の制御のみ）
-    checkbox.addEventListener('change', function() {
-        if (this.checked) {
-            personalInfo.style.opacity = '0.3';
-            inputs.forEach(input => {
-                // 値をクリアしてしまうとサーバーに送れないため、見た目だけ薄くする運用に変更してもOK
-                // 今回は入力不可にする
-                input.value = '';     
-                input.readOnly = true; // disabledだとデータが飛ばないのでreadOnly推奨
-            });
-            document.getElementById('submitBtn').innerText = "匿名で送信する";
-        } else {
-            personalInfo.style.opacity = '1';
-            inputs.forEach(input => input.readOnly = false);
-            document.getElementById('submitBtn').innerText = "送信する";
-        }
-    });
-</script>
+<div class="hub">
+    <section class="card" aria-labelledby="threads-heading">
+        <h2 id="threads-heading">{% translate 'これまでの相談' %}</h2>
+        <ul class="thread-list">
+            {% for conv in conversations %}
+                <li>
+                    <a class="thread-link" href="{% url 'mentalhealth:soudan_thread' conv.anonymous_code %}">
+                        <span class="avatar"><span class="material-symbols-outlined" aria-hidden="true">forum</span></span>
+                        <span class="thread-meta">
+                            <span class="thread-name">{{ conv.teacher__name }}{% if conv.teacher__position %} {{ conv.teacher__position }}{% endif %}</span>
+                            <span class="thread-time">{{ conv.last_message_at|date:"SHORT_DATETIME_FORMAT" }}</span>
+                        </span>
+                        {% if conv.unread_count %}<span class="badge" aria-label="{% blocktranslate with n=conv.unread_count %}未読 {{ n }}件{% endblocktranslate %}">{{ conv.unread_count }}</span>{% endif %}
+                    </a>
+                </li>
+            {% empty %}
+                <li class="empty">{% translate 'まだ相談はありません。' %}</li>
+            {% endfor %}
+        </ul>
+    </section>
 
-</body>
-</html>
+    <section class="card" aria-labelledby="new-heading">
+        <h2 id="new-heading">{% translate '新しく相談を始める' %}</h2>
+        <p class="page-lead">{% translate '同じ先生への相談は、同じスレッドに続けて記録されます。' %}</p>
+
+        {% if error %}<div class="notice notice--error" role="alert">{{ error }}</div>{% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="teacher_id">{% translate '相談したい先生' %}</label>
+                <select id="teacher_id" name="teacher_id" required>
+                    <option value="">{% translate '選択してください' %}</option>
+                    {% for teacher in teachers %}
+                        <option value="{{ teacher.id }}">{{ teacher.name }}{% if teacher.position %} {{ teacher.position }}{% endif %}{% if teacher.department %} ({{ teacher.department }}){% endif %}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="field">
+                <label for="message">{% translate '相談内容' %}</label>
+                <textarea id="message" name="message" required placeholder="{% translate 'うまくまとまっていなくても大丈夫です' %}"></textarea>
+            </div>
+            <button type="submit" class="btn btn--block">
+                <span class="material-symbols-outlined" aria-hidden="true">send</span>{% translate '送信する' %}
+            </button>
+        </form>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% load i18n %}
+<ul class="quiz-meta">
+    <li>{% blocktranslate %}{{ count }}問{% endblocktranslate %}</li>
+    <li>{% blocktranslate %}約{{ minutes }}分{% endblocktranslate %}</li>
+    <li><span class="material-symbols-outlined" aria-hidden="true">lock</span>{% translate '回答は保存されません' %}</li>
+</ul>
